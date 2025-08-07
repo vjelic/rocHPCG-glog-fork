@@ -1,0 +1,1441 @@
+{
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Glog.AI",
+          "organization": "Glog.AI",
+          "fullName": "Glog, Making software more secure",
+          "version": "1.0.0",
+          "semanticVersion": "1.0.0",
+          "informationUri": "https://www.glog.ai",
+          "rules": [
+            {
+              "id": "glog-f56e8088-0797-4f54-8a55-e7336515b7b5",
+              "help": {
+                "text": "",
+                "markdown": "### Description\n\nIn C++ programming, using weak or non-cryptographic random number generators, such as the `rand()` function, can lead to vulnerabilities, especially in security-sensitive applications. The `rand()` function is not suitable for cryptographic purposes because it generates predictable sequences of numbers if the seed is known. This predictability can be exploited by attackers to compromise the security of the application.\n\n### General Mitigation Advice\n\nTo mitigate this vulnerability, use a cryptographically secure random number generator. In C++, the `<random>` library provides better alternatives, such as `std::random_device` and `std::mt19937`, which can be used to generate random numbers more securely.\n\n### Source Code Fix Recommendation\n\nReplace the use of `rand()` with a more secure random number generator from the `<random>` library. Here is an example of how to do this:\n\n```cpp\n#include <iostream>\n#include <random>\n\nint main() {\n    // Create a random device and a Mersenne Twister random number generator\n    std::random_device rd;\n    std::mt19937 gen(rd());\n\n    // Define a distribution range\n    std::uniform_int_distribution<> dis(1, 100);\n\n    // Generate a random number\n    int random_number = dis(gen);\n\n    std::cout << \"Secure random number: \" << random_number << std::endl;\n\n    return 0;\n}\n```\n\n### Library Dependencies\n\nTo execute the above code example properly, the following library is required:\n\n- `<random>`: This library provides facilities for generating random numbers.\n\n### OWASP Resources\n\n- [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html)\n\n### Common Weakness Enumeration (CWE)\n\n- [CWE-338: Use of Cryptographically Weak Pseudo-Random Number Generator (PRNG)](https://cwe.mitre.org/data/definitions/338.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS148264"
+                ]
+              }
+            },
+            {
+              "id": "glog-bc261797-f8d8-4023-8280-008e9922330e",
+              "help": {
+                "text": "",
+                "markdown": "The \"Unsecured Web Address\" vulnerability refers to the use of unencrypted HTTP protocol to access or transfer data over the internet. This can lead to a variety of security issues, such as Man-in-the-Middle (MitM) attacks, where an attacker can intercept and potentially alter the communication between two parties without their knowledge.\n\nIn the context of C++ programming, this vulnerability can occur when a program uses libraries or functions that perform network operations over HTTP, instead of secure HTTPS.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, always use HTTPS for network communication. HTTPS encrypts the data sent between the client and the server, making it much more difficult for an attacker to intercept or alter the data.\n\nIf you are using a library that does not support HTTPS, consider switching to a different library that does. If this is not possible, you may need to implement your own encryption on top of the HTTP communication.\n\n## Source Code Fix Recommendation\n\nThe specific vulnerability sink you provided is a URL, not a piece of C++ code. However, if you were using a library like libcurl to access this URL in your C++ program, you could switch to using HTTPS like so:\n\n```cpp\n#include <curl/curl.h>\n\nint main() {\n    CURL *curl = curl_easy_init();\n    if(curl) {\n        CURLcode res;\n        curl_easy_setopt(curl, CURLOPT_URL, \"https://hpcg-benchmark.org\");\n        res = curl_easy_perform(curl);\n        curl_easy_cleanup(curl);\n    }\n    return 0;\n}\n```\n\n## Library Dependencies\n\nThe above code example requires the libcurl library.\n\n## OWASP Resources\n\n- [OWASP Transport Layer Protection Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.html)\n- [OWASP Secure Coding Practices](https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/)\n\n## Common Weakness Enumeration (CWE)\n\n- [CWE-319: Cleartext Transmission of Sensitive Information](https://cwe.mitre.org/data/definitions/319.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS137138"
+                ]
+              }
+            },
+            {
+              "id": "glog-44006f16-4a31-441b-b8bc-c07c626b3220",
+              "help": {
+                "text": "",
+                "markdown": "The \"Unsecured Web Address\" vulnerability refers to the use of unencrypted HTTP protocol to access or transfer data over the internet. This can lead to a variety of security issues, such as Man-in-the-Middle (MitM) attacks, where an attacker can intercept and potentially alter the communication between two parties without their knowledge.\n\nIn the context of C++ programming, this vulnerability can occur when a program uses libraries or functions that perform network operations over HTTP, instead of secure HTTPS.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, always use HTTPS for network communication. HTTPS encrypts the data sent between the client and the server, making it much more difficult for an attacker to intercept or alter the data.\n\nIf you are using a library that does not support HTTPS, consider switching to a different library that does. If this is not possible, you may need to implement your own encryption on top of the HTTP communication.\n\n## Source Code Fix Recommendation\n\nThe specific vulnerability sink you provided is a URL, not a piece of C++ code. However, if you were using a library like libcurl to access this URL in your C++ program, you could switch to using HTTPS like so:\n\n```cpp\n#include <curl/curl.h>\n\nint main() {\n    CURL *curl = curl_easy_init();\n    if(curl) {\n        CURLcode res;\n        curl_easy_setopt(curl, CURLOPT_URL, \"https://hpcg-benchmark.org\");\n        res = curl_easy_perform(curl);\n        curl_easy_cleanup(curl);\n    }\n    return 0;\n}\n```\n\n## Library Dependencies\n\nThe above code example requires the libcurl library.\n\n## OWASP Resources\n\n- [OWASP Transport Layer Protection Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.html)\n- [OWASP Secure Coding Practices](https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/)\n\n## Common Weakness Enumeration (CWE)\n\n- [CWE-319: Cleartext Transmission of Sensitive Information](https://cwe.mitre.org/data/definitions/319.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS137138"
+                ]
+              }
+            },
+            {
+              "id": "glog-8a7f8721-4986-41ed-a30b-ca3c47df4199",
+              "help": {
+                "text": "",
+                "markdown": "### Description\n\nIn C++ programming, using weak or non-cryptographic random number generators can lead to vulnerabilities, especially when randomness is required for security purposes. The `rand()` function, which relies on `RAND_MAX`, is a common example of a non-cryptographic random number generator. It is predictable and not suitable for cryptographic purposes, such as generating keys, tokens, or any other security-sensitive data.\n\n### General Mitigation Advice\n\nTo mitigate this vulnerability, use a cryptographic random number generator. In C++, the `<random>` library provides better alternatives, such as `std::random_device` and `std::mt19937`, which are more suitable for generating random numbers in a secure manner.\n\n### Source Code Fix Recommendation\n\nReplace the use of `rand()` with a more secure random number generator from the `<random>` library. Here's an example of how to do this:\n\n```cpp\n#include <iostream>\n#include <random>\n\nint main() {\n    // Create a random device and a Mersenne Twister random number generator\n    std::random_device rd;\n    std::mt19937 gen(rd());\n\n    // Define the range for random numbers\n    std::uniform_int_distribution<> dis(1, 100);\n\n    // Generate a random number\n    int random_number = dis(gen);\n\n    std::cout << \"Secure random number: \" << random_number << std::endl;\n\n    return 0;\n}\n```\n\n### Library Dependencies\n\nTo execute the above code example, the following library is required:\n\n- `<random>`: This is part of the C++ Standard Library and does not require any additional dependencies beyond a standard C++11-compliant compiler.\n\n### Relevant OWASP Resources\n\n- [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html)\n\n### Common Weakness Enumeration (CWE)\n\n- [CWE-338: Use of Cryptographically Weak Pseudo-Random Number Generator (PRNG)](https://cwe.mitre.org/data/definitions/338.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS148264"
+                ]
+              }
+            },
+            {
+              "id": "glog-f0c29d33-d36c-4d53-92b8-49cb5bdf9176",
+              "help": {
+                "text": "",
+                "markdown": "### Description\n\nIn C++ programming, using weak or non-cryptographic random number generators can lead to vulnerabilities, especially when randomness is required for security purposes. The `rand()` function, which relies on `RAND_MAX`, is a common example of a non-cryptographic random number generator. It is predictable and not suitable for cryptographic purposes, such as generating keys, tokens, or any other security-sensitive data.\n\n### General Mitigation Advice\n\nTo mitigate this vulnerability, use a cryptographic random number generator. In C++, the `<random>` library provides better alternatives, such as `std::random_device` and `std::mt19937`, which are more suitable for generating random numbers in a secure manner.\n\n### Source Code Fix Recommendation\n\nReplace the use of `rand()` with a more secure random number generator from the `<random>` library. Here's an example of how to do this:\n\n```cpp\n#include <iostream>\n#include <random>\n\nint main() {\n    // Create a random device and a Mersenne Twister random number generator\n    std::random_device rd;\n    std::mt19937 gen(rd());\n\n    // Define the range for random numbers\n    std::uniform_int_distribution<> dis(1, 100);\n\n    // Generate a random number\n    int random_number = dis(gen);\n\n    std::cout << \"Secure random number: \" << random_number << std::endl;\n\n    return 0;\n}\n```\n\n### Library Dependencies\n\nTo execute the above code example, the following library is required:\n\n- `<random>`: This is part of the C++ Standard Library and does not require any additional dependencies beyond a standard C++11-compliant compiler.\n\n### Relevant OWASP Resources\n\n- [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html)\n\n### Common Weakness Enumeration (CWE)\n\n- [CWE-338: Use of Cryptographically Weak Pseudo-Random Number Generator (PRNG)](https://cwe.mitre.org/data/definitions/338.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS148264"
+                ]
+              }
+            },
+            {
+              "id": "glog-075116f7-89ed-48aa-81e8-0101b2b9e580",
+              "help": {
+                "text": "",
+                "markdown": "### Description\n\nIn C++ programming, using weak or non-cryptographic random number generators, such as the `rand()` function, can lead to vulnerabilities, especially in security-sensitive applications. The `rand()` function is not suitable for cryptographic purposes because it generates predictable sequences of numbers if the seed is known. This predictability can be exploited by attackers to compromise the security of the application.\n\n### General Mitigation Advice\n\nTo mitigate this vulnerability, use a cryptographically secure random number generator. In C++, the `<random>` library provides better alternatives, such as `std::random_device` and `std::mt19937`, which can be used to generate random numbers more securely.\n\n### Source Code Fix Recommendation\n\nReplace the use of `rand()` with a more secure random number generator from the `<random>` library. Here is an example of how to do this:\n\n```cpp\n#include <iostream>\n#include <random>\n\nint main() {\n    // Create a random device and a Mersenne Twister random number generator\n    std::random_device rd;\n    std::mt19937 gen(rd());\n\n    // Define a distribution range\n    std::uniform_int_distribution<> dis(1, 100);\n\n    // Generate a random number\n    int random_number = dis(gen);\n\n    std::cout << \"Secure random number: \" << random_number << std::endl;\n\n    return 0;\n}\n```\n\n### Library Dependencies\n\nTo execute the above code example properly, the following library is required:\n\n- `<random>`: This library provides facilities for generating random numbers.\n\n### OWASP Resources\n\n- [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html)\n\n### Common Weakness Enumeration (CWE)\n\n- [CWE-338: Use of Cryptographically Weak Pseudo-Random Number Generator (PRNG)](https://cwe.mitre.org/data/definitions/338.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS148264"
+                ]
+              }
+            },
+            {
+              "id": "glog-709f9bf3-62fc-40b1-8192-c0c252c26776",
+              "help": {
+                "text": "",
+                "markdown": "### Description\n\nThe vulnerability associated with the `strlen` function in C++ arises from its inability to handle non-null-terminated strings. If `strlen` is called on a string that is not properly null-terminated, it can lead to undefined behavior, including buffer overflows, which can be exploited to execute arbitrary code or cause a program crash. This is particularly dangerous when the string is derived from untrusted input.\n\n### General Mitigation Advice\n\n1. **Ensure Null Termination**: Always ensure that strings are null-terminated before passing them to `strlen`.\n2. **Use Safer Alternatives**: Consider using safer string handling functions or classes, such as `std::string` in C++, which manage null-termination automatically.\n3. **Input Validation**: Validate and sanitize all input data to ensure it conforms to expected formats and lengths.\n4. **Bounds Checking**: Implement bounds checking to ensure that buffer sizes are respected and not exceeded.\n\n### Source Code Fix Recommendation\n\nTo mitigate the vulnerability associated with `strlen(prefix)`, ensure that `prefix` is a properly null-terminated string. If `prefix` is derived from user input or other sources, validate its length and ensure null termination before using `strlen`.\n\n```cpp\n#include <iostream>\n#include <cstring> // Required for strlen\n\nint main() {\n    const char* prefix = \"example\"; // Ensure this is null-terminated\n    // Validate the length of the prefix\n    if (prefix != nullptr && std::strlen(prefix) < MAX_EXPECTED_LENGTH) {\n        size_t length = std::strlen(prefix);\n        std::cout << \"Length of prefix: \" << length << std::endl;\n    } else {\n        std::cerr << \"Invalid or too long prefix\" << std::endl;\n    }\n    return 0;\n}\n```\n\n### Library Dependencies\n\n- `<iostream>`: Required for input and output operations.\n- `<cstring>`: Required for using `strlen`.\n\n### OWASP Resources\n\n- [OWASP Top Ten](https://owasp.org/www-project-top-ten/)\n- [OWASP Secure Coding Practices](https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/)\n\n### Common Weakness Enumeration (CWE)\n\n- [CWE-170: Improper Null Termination](https://cwe.mitre.org/data/definitions/170.html)\n- [CWE-120: Buffer Copy without Checking Size of Input ('Classic Buffer Overflow')](https://cwe.mitre.org/data/definitions/120.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS140021"
+                ]
+              }
+            },
+            {
+              "id": "glog-b03db43a-2607-4b73-99ce-253420bab44c",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\nThe `strlen()` function in C and C++ is used to find the length of a string. However, it can lead to vulnerabilities if not used properly. The function counts the number of characters in a string until it reaches a null character (`'\\0'`). If the string is not null-terminated, `strlen()` will continue reading memory beyond the intended boundary, leading to a buffer overflow vulnerability. This can result in crashes, incorrect behavior, or potential execution of malicious code.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, always ensure that your strings are null-terminated. Avoid using `strlen()` on strings that may not be null-terminated. Instead, consider using safer alternatives such as `strnlen()`, which takes an additional parameter to specify the maximum length of the string.\n\n## Source Code Fix Recommendation\n\nReplace `strlen(cparams[j])` with `strnlen(cparams[j], MAX_LENGTH)`, where `MAX_LENGTH` is the maximum expected length of the string.\n\n```cpp\n// Before\nsize_t len = strlen(cparams[j]);\n\n// After\nsize_t len = strnlen(cparams[j], MAX_LENGTH);\n```\n\n## Library Dependencies\n\nThe `strlen()` function is part of the C standard library, so no additional libraries are needed.\n\n## OWASP Resources\n\n- [Buffer Overflow](https://owasp.org/www-community/vulnerabilities/Buffer_Overflow)\n\n## Common Weakness Enumeration (CWE)\n\n- [CWE-119: Improper Restriction of Operations within the Bounds of a Memory Buffer](https://cwe.mitre.org/data/definitions/119.html)\n- [CWE-120: Buffer Copy without Checking Size of Input ('Classic Buffer Overflow')](https://cwe.mitre.org/data/definitions/120.html)\n- [CWE-805: Buffer Access with Incorrect Length Value](https://cwe.mitre.org/data/definitions/805.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS140021"
+                ]
+              }
+            },
+            {
+              "id": "glog-69b80156-6290-42fd-bbd6-a96ee06138b0",
+              "help": {
+                "text": "",
+                "markdown": "### Description\n\nThe \"Identified Issue with C Function (malloc)\" vulnerability in C++ arises when the `malloc` function is used incorrectly, leading to potential memory allocation issues. Specifically, the vulnerability can occur when the size of the memory allocation is not correctly specified, which can result in buffer overflows, memory corruption, or undefined behavior. In the provided example, `malloc(sizeof(int)` is missing a closing parenthesis, which can lead to compilation errors or unintended behavior.\n\n### General Mitigation Advice\n\n1. **Correct Syntax**: Ensure that the syntax for `malloc` is correct, including all necessary parentheses.\n2. **Check Return Value**: Always check the return value of `malloc` to ensure that memory allocation was successful.\n3. **Use `new` in C++**: Prefer using `new` and `delete` in C++ for memory management, as they are type-safe and integrate better with C++ features.\n4. **Initialize Memory**: Consider using `calloc` or explicitly initializing memory to avoid using uninitialized memory.\n5. **Free Allocated Memory**: Always free allocated memory using `free` to prevent memory leaks.\n\n### Source Code Fix Recommendation\n\nHere is a corrected version of the code using `malloc`:\n\n```cpp\n#include <cstdlib> // Required for malloc and free\n#include <iostream>\n\nint main() {\n    int* ptr = (int*)malloc(sizeof(int)); // Corrected syntax with closing parenthesis\n    if (ptr == nullptr) {\n        std::cerr << \"Memory allocation failed\" << std::endl;\n        return 1;\n    }\n\n    *ptr = 42; // Example usage of allocated memory\n    std::cout << \"Value: \" << *ptr << std::endl;\n\n    free(ptr); // Free allocated memory\n    return 0;\n}\n```\n\nAlternatively, using C++'s `new` operator:\n\n```cpp\n#include <iostream>\n\nint main() {\n    int* ptr = new(std::nothrow) int; // Use new with nothrow to handle allocation failure\n    if (ptr == nullptr) {\n        std::cerr << \"Memory allocation failed\" << std::endl;\n        return 1;\n    }\n\n    *ptr = 42; // Example usage of allocated memory\n    std::cout << \"Value: \" << *ptr << std::endl;\n\n    delete ptr; // Free allocated memory\n    return 0;\n}\n```\n\n### Library Dependencies\n\n- `<cstdlib>`: Required for `malloc` and `free`.\n- `<iostream>`: Required for input and output operations.\n\n### OWASP Resources\n\n- [OWASP Top Ten](https://owasp.org/www-project-top-ten/)\n- [OWASP Secure Coding Practices](https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/)\n\n### Common Weakness Enumeration (CWE)\n\n- [CWE-122: Heap-based Buffer Overflow](https://cwe.mitre.org/data/definitions/122.html)\n- [CWE-476: NULL Pointer Dereference](https://cwe.mitre.org/data/definitions/476.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS161085"
+                ]
+              }
+            },
+            {
+              "id": "glog-25111b1e-0f2c-436f-87b5-ca53e6b31e78",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\nThe `strlen()` function in C/C++ is used to calculate the length of a string. However, it can lead to vulnerabilities if not used properly. The function counts the number of characters in a string until it reaches a null character (`'\\0'`). If the string is not properly null-terminated, `strlen()` will continue reading memory beyond the intended boundary, leading to a buffer overflow vulnerability. This can result in crashes, incorrect behavior, or potential execution of malicious code.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, always ensure that your strings are null-terminated. Avoid using `strlen()` on strings that may not be null-terminated. Instead, consider using safer alternatives such as `strnlen()`, which takes an additional parameter to specify the maximum length of the string.\n\n## Source Code Fix Recommendation\n\nIn the specific case of `strlen(\"--tol=\")`, the string is a constant and is automatically null-terminated, so there is no vulnerability. However, if the string was not a constant, a safer alternative would be:\n\n```cpp\nsize_t len = strnlen(user_input, MAX_LEN);\n```\n\nWhere `MAX_LEN` is the maximum expected length of the string.\n\n## Library Dependencies\n\nThe `strlen()` function is part of the C standard library, so no additional libraries are needed for this code to execute properly.\n\n## References\n\n- [OWASP C/C++ Vulnerabilities](https://owasp.org/www-pdf-archive/OWASP_SCP_Quick_Reference_Guide_v2.pdf)\n- [CWE-126: Buffer Over-read](https://cwe.mitre.org/data/definitions/126.html)\n\nPlease note that the links provided are accessible to anonymous users at the time of writing this report."
+              },
+              "properties": {
+                "tags": [
+                  "DS140021"
+                ]
+              }
+            },
+            {
+              "id": "glog-b6dd3cd9-26e2-47e0-bb1c-9a8d426b77ce",
+              "help": {
+                "text": "",
+                "markdown": "### Description\n\nThe \"Detected Issue with C Function (malloc)\" vulnerability in C++ programming arises when the `malloc` function is used incorrectly, leading to potential memory allocation issues. Specifically, the vulnerability occurs when the size of the memory allocation is not calculated correctly, which can result in buffer overflows, memory corruption, or undefined behavior. In the provided example, `malloc(sizeof(char))` is used, which allocates memory for only a single character. If more memory is needed, this allocation will be insufficient, leading to potential vulnerabilities.\n\n### General Mitigation Advice\n\n1. **Use `new` in C++**: Prefer using C++ memory management techniques such as `new` and `delete` instead of C-style `malloc` and `free`.\n2. **Correct Size Calculation**: Ensure that the size passed to `malloc` is sufficient for the data structure you intend to store.\n3. **Check Return Values**: Always check the return value of `malloc` to ensure that memory allocation was successful.\n4. **Use Safer Alternatives**: Consider using safer alternatives like `std::vector` or `std::string` for dynamic memory management in C++.\n\n### Source Code Fix Recommendation\n\nTo fix the specific vulnerability sink, ensure that the size passed to `malloc` is correctly calculated. If you need to allocate memory for a string of characters, include the null terminator and use the correct size:\n\n```cpp\n#include <cstdlib> // Required for malloc and free\n#include <cstring> // Required for strlen\n\nint main() {\n    const char* exampleString = \"Hello, World!\";\n    size_t length = strlen(exampleString) + 1; // +1 for the null terminator\n    char* buffer = (char*)malloc(length * sizeof(char));\n\n    if (buffer == nullptr) {\n        // Handle memory allocation failure\n        return -1;\n    }\n\n    strcpy(buffer, exampleString); // Copy the string into the allocated buffer\n\n    // Use the buffer...\n\n    free(buffer); // Free the allocated memory\n    return 0;\n}\n```\n\n### Library Dependencies\n\n- `<cstdlib>`: Required for `malloc` and `free`.\n- `<cstring>`: Required for `strlen` and `strcpy`.\n\n### Relevant Links\n\n- [OWASP Top Ten](https://owasp.org/www-project-top-ten/)\n- [OWASP Secure Coding Practices](https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/)\n- [CWE-122: Heap-based Buffer Overflow](https://cwe.mitre.org/data/definitions/122.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS161085"
+                ]
+              }
+            },
+            {
+              "id": "glog-ce4366a0-1b0a-4813-be40-091be22a7ef3",
+              "help": {
+                "text": "",
+                "markdown": "### Description\n\nThe \"Detected Issue with C Function (malloc)\" vulnerability in C++ programming arises when the `malloc` function is used incorrectly, leading to potential memory allocation issues. Specifically, the vulnerability occurs when the size of the memory allocation is not calculated correctly, which can result in buffer overflows, memory corruption, or undefined behavior. In the provided example, `malloc(sizeof(char))` is used, which allocates memory for only a single character. If more memory is needed, this allocation will be insufficient, leading to potential vulnerabilities.\n\n### General Mitigation Advice\n\n1. **Use `new` in C++**: Prefer using C++ memory management techniques such as `new` and `delete` instead of C-style `malloc` and `free`.\n2. **Correct Size Calculation**: Ensure that the size passed to `malloc` is sufficient for the data structure you intend to store.\n3. **Check Return Values**: Always check the return value of `malloc` to ensure that memory allocation was successful.\n4. **Use Safer Alternatives**: Consider using safer alternatives like `std::vector` or `std::string` for dynamic memory management in C++.\n\n### Source Code Fix Recommendation\n\nTo fix the specific vulnerability sink, ensure that the size passed to `malloc` is correctly calculated. If you need to allocate memory for a string of characters, include the null terminator and use the correct size:\n\n```cpp\n#include <cstdlib> // Required for malloc and free\n#include <cstring> // Required for strlen\n\nint main() {\n    const char* exampleString = \"Hello, World!\";\n    size_t length = strlen(exampleString) + 1; // +1 for the null terminator\n    char* buffer = (char*)malloc(length * sizeof(char));\n\n    if (buffer == nullptr) {\n        // Handle memory allocation failure\n        return -1;\n    }\n\n    strcpy(buffer, exampleString); // Copy the string into the allocated buffer\n\n    // Use the buffer...\n\n    free(buffer); // Free the allocated memory\n    return 0;\n}\n```\n\n### Library Dependencies\n\n- `<cstdlib>`: Required for `malloc` and `free`.\n- `<cstring>`: Required for `strlen` and `strcpy`.\n\n### Relevant Links\n\n- [OWASP Top Ten](https://owasp.org/www-project-top-ten/)\n- [OWASP Secure Coding Practices](https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/)\n- [CWE-122: Heap-based Buffer Overflow](https://cwe.mitre.org/data/definitions/122.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS161085"
+                ]
+              }
+            },
+            {
+              "id": "glog-0e20f426-d486-474c-b1f6-7d1e8fb61ad9",
+              "help": {
+                "text": "",
+                "markdown": "### Description\n\nThe \"Detected Issue with C Function (malloc)\" vulnerability in C++ programming arises when the `malloc` function is used incorrectly, leading to potential memory allocation issues. Specifically, the vulnerability occurs when the size of the memory allocation is not calculated correctly, which can result in buffer overflows, memory corruption, or undefined behavior. In the provided example, `malloc(sizeof(char))` is used, which allocates memory for only a single character. If more memory is needed, this allocation will be insufficient, leading to potential vulnerabilities.\n\n### General Mitigation Advice\n\n1. **Use `new` in C++**: Prefer using C++ memory management techniques such as `new` and `delete` instead of C-style `malloc` and `free`.\n2. **Correct Size Calculation**: Ensure that the size passed to `malloc` is sufficient for the data structure you intend to store.\n3. **Check Return Values**: Always check the return value of `malloc` to ensure that memory allocation was successful.\n4. **Use Safer Alternatives**: Consider using safer alternatives like `std::vector` or `std::string` for dynamic memory management in C++.\n\n### Source Code Fix Recommendation\n\nTo fix the specific vulnerability sink, ensure that the size passed to `malloc` is correctly calculated. If you need to allocate memory for a string of characters, include the null terminator and use the correct size:\n\n```cpp\n#include <cstdlib> // Required for malloc and free\n#include <cstring> // Required for strlen\n\nint main() {\n    const char* exampleString = \"Hello, World!\";\n    size_t length = strlen(exampleString) + 1; // +1 for the null terminator\n    char* buffer = (char*)malloc(length * sizeof(char));\n\n    if (buffer == nullptr) {\n        // Handle memory allocation failure\n        return -1;\n    }\n\n    strcpy(buffer, exampleString); // Copy the string into the allocated buffer\n\n    // Use the buffer...\n\n    free(buffer); // Free the allocated memory\n    return 0;\n}\n```\n\n### Library Dependencies\n\n- `<cstdlib>`: Required for `malloc` and `free`.\n- `<cstring>`: Required for `strlen` and `strcpy`.\n\n### Relevant Links\n\n- [OWASP Top Ten](https://owasp.org/www-project-top-ten/)\n- [OWASP Secure Coding Practices](https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/)\n- [CWE-122: Heap-based Buffer Overflow](https://cwe.mitre.org/data/definitions/122.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS161085"
+                ]
+              }
+            },
+            {
+              "id": "glog-0b2ee181-0b80-42de-becf-16baebd0fbd6",
+              "help": {
+                "text": "",
+                "markdown": "### Description\n\nThe \"Detected Issue with C Function (malloc)\" vulnerability in C++ programming arises when the `malloc` function is used incorrectly, leading to potential memory allocation issues. Specifically, the vulnerability occurs when the size of the memory allocation is not calculated correctly, which can result in buffer overflows, memory corruption, or undefined behavior. In the provided example, `malloc(sizeof(char))` is used, which allocates memory for only a single character. If more memory is needed, this allocation will be insufficient, leading to potential vulnerabilities.\n\n### General Mitigation Advice\n\n1. **Use `new` in C++**: Prefer using C++ memory management techniques such as `new` and `delete` instead of C-style `malloc` and `free`.\n2. **Correct Size Calculation**: Ensure that the size passed to `malloc` is sufficient for the data structure you intend to store.\n3. **Check Return Values**: Always check the return value of `malloc` to ensure that memory allocation was successful.\n4. **Use Safer Alternatives**: Consider using safer alternatives like `std::vector` or `std::string` for dynamic memory management in C++.\n\n### Source Code Fix Recommendation\n\nTo fix the specific vulnerability sink, ensure that the size passed to `malloc` is correctly calculated. If you need to allocate memory for a string of characters, include the null terminator and use the correct size:\n\n```cpp\n#include <cstdlib> // Required for malloc and free\n#include <cstring> // Required for strlen\n\nint main() {\n    const char* exampleString = \"Hello, World!\";\n    size_t length = strlen(exampleString) + 1; // +1 for the null terminator\n    char* buffer = (char*)malloc(length * sizeof(char));\n\n    if (buffer == nullptr) {\n        // Handle memory allocation failure\n        return -1;\n    }\n\n    strcpy(buffer, exampleString); // Copy the string into the allocated buffer\n\n    // Use the buffer...\n\n    free(buffer); // Free the allocated memory\n    return 0;\n}\n```\n\n### Library Dependencies\n\n- `<cstdlib>`: Required for `malloc` and `free`.\n- `<cstring>`: Required for `strlen` and `strcpy`.\n\n### Relevant Links\n\n- [OWASP Top Ten](https://owasp.org/www-project-top-ten/)\n- [OWASP Secure Coding Practices](https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/)\n- [CWE-122: Heap-based Buffer Overflow](https://cwe.mitre.org/data/definitions/122.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS161085"
+                ]
+              }
+            },
+            {
+              "id": "glog-3b48d918-1d55-4d7c-bdf7-5643bdd0dac4",
+              "help": {
+                "text": "",
+                "markdown": "### Description\n\nThe \"Detected Issue with C Function (malloc)\" vulnerability in C++ programming arises when the `malloc` function is used incorrectly, leading to potential memory allocation issues. Specifically, the vulnerability occurs when the size of the memory allocation is not calculated correctly, which can result in buffer overflows, memory corruption, or undefined behavior. In the provided example, `malloc(sizeof(char))` is used, which allocates memory for only a single character. If more memory is needed, this allocation will be insufficient, leading to potential vulnerabilities.\n\n### General Mitigation Advice\n\n1. **Use `new` in C++**: Prefer using C++ memory management techniques such as `new` and `delete` instead of C-style `malloc` and `free`.\n2. **Correct Size Calculation**: Ensure that the size passed to `malloc` is sufficient for the data structure you intend to store.\n3. **Check Return Values**: Always check the return value of `malloc` to ensure that memory allocation was successful.\n4. **Use Safer Alternatives**: Consider using safer alternatives like `std::vector` or `std::string` for dynamic memory management in C++.\n\n### Source Code Fix Recommendation\n\nTo fix the specific vulnerability sink, ensure that the size passed to `malloc` is correctly calculated. If you need to allocate memory for a string of characters, include the null terminator and use the correct size:\n\n```cpp\n#include <cstdlib> // Required for malloc and free\n#include <cstring> // Required for strlen\n\nint main() {\n    const char* exampleString = \"Hello, World!\";\n    size_t length = strlen(exampleString) + 1; // +1 for the null terminator\n    char* buffer = (char*)malloc(length * sizeof(char));\n\n    if (buffer == nullptr) {\n        // Handle memory allocation failure\n        return -1;\n    }\n\n    strcpy(buffer, exampleString); // Copy the string into the allocated buffer\n\n    // Use the buffer...\n\n    free(buffer); // Free the allocated memory\n    return 0;\n}\n```\n\n### Library Dependencies\n\n- `<cstdlib>`: Required for `malloc` and `free`.\n- `<cstring>`: Required for `strlen` and `strcpy`.\n\n### Relevant Links\n\n- [OWASP Top Ten](https://owasp.org/www-project-top-ten/)\n- [OWASP Secure Coding Practices](https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/)\n- [CWE-122: Heap-based Buffer Overflow](https://cwe.mitre.org/data/definitions/122.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS161085"
+                ]
+              }
+            },
+            {
+              "id": "glog-3660045b-6409-402c-8eb8-a89a4413e94f",
+              "help": {
+                "text": "",
+                "markdown": "### Description\n\nIn C++ programming, using weak or non-cryptographic random number generators, such as the `rand()` function, can lead to vulnerabilities, especially when randomness is critical for security purposes. The `rand()` function is not suitable for cryptographic purposes because it produces predictable sequences of numbers if the seed is known or can be guessed. This can lead to vulnerabilities in applications where randomness is used for generating keys, tokens, or any other security-related data.\n\n### General Mitigation Advice\n\nTo mitigate this vulnerability, use a cryptographically secure random number generator (CSPRNG) instead of `rand()`. In C++, the `<random>` library provides better alternatives, such as `std::random_device` and `std::mt19937`, which can be used to generate random numbers with better randomness properties.\n\n### Source Code Fix Recommendation\n\nReplace the use of `rand() %` with a more secure random number generation approach using the `<random>` library. Below is an example of how to replace `rand()` with a CSPRNG:\n\n```cpp\n#include <iostream>\n#include <random>\n\nint main() {\n    // Create a random device and a Mersenne Twister engine\n    std::random_device rd;\n    std::mt19937 gen(rd());\n\n    // Define the range for random numbers\n    std::uniform_int_distribution<> dis(0, 99); // Example range [0, 99]\n\n    // Generate a random number\n    int random_number = dis(gen);\n\n    std::cout << \"Secure random number: \" << random_number << std::endl;\n\n    return 0;\n}\n```\n\n### Library Dependencies\n\nTo execute the above code example, the following library is required:\n\n- `<random>`: This is part of the C++ Standard Library and does not require any additional dependencies beyond a standard C++ compiler that supports C++11 or later.\n\n### Relevant Links\n\n- [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html)\n- [CWE-338: Use of Cryptographically Weak Pseudo-Random Number Generator (PRNG)](https://cwe.mitre.org/data/definitions/338.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS148264"
+                ]
+              }
+            },
+            {
+              "id": "glog-fa0e1609-1814-42b4-bf1c-519aa319e887",
+              "help": {
+                "text": "",
+                "markdown": "### Description\n\nIn C++ programming, using weak or non-cryptographic random number generators, such as the `rand()` function, can lead to vulnerabilities, especially in security-sensitive applications. The `rand()` function is not suitable for cryptographic purposes because it generates predictable sequences of numbers if the seed is known. This predictability can be exploited by attackers to compromise the security of the application.\n\n### General Mitigation Advice\n\nTo mitigate this vulnerability, use a cryptographically secure random number generator. In C++, the `<random>` library provides better alternatives, such as `std::random_device` and `std::mt19937`, which can be used to generate random numbers more securely.\n\n### Source Code Fix Recommendation\n\nReplace the use of `rand()` with a more secure random number generator from the `<random>` library. Here is an example of how to do this:\n\n```cpp\n#include <iostream>\n#include <random>\n\nint main() {\n    // Create a random device and a Mersenne Twister random number generator\n    std::random_device rd;\n    std::mt19937 gen(rd());\n\n    // Define a distribution range\n    std::uniform_int_distribution<> dis(1, 100);\n\n    // Generate a random number\n    int random_number = dis(gen);\n\n    std::cout << \"Secure random number: \" << random_number << std::endl;\n\n    return 0;\n}\n```\n\n### Library Dependencies\n\nTo execute the above code example properly, the following library is required:\n\n- `<random>`: This library provides facilities for generating random numbers.\n\n### OWASP Resources\n\n- [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html)\n\n### Common Weakness Enumeration (CWE)\n\n- [CWE-338: Use of Cryptographically Weak Pseudo-Random Number Generator (PRNG)](https://cwe.mitre.org/data/definitions/338.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS148264"
+                ]
+              }
+            },
+            {
+              "id": "glog-cd11d1f9-b073-4dfb-9f70-236845df0568",
+              "help": {
+                "text": "",
+                "markdown": "### Description\n\nIn C++ programming, using weak or non-cryptographic random number generators, such as the `rand()` function, can lead to vulnerabilities, especially in security-sensitive applications. The `rand()` function is not suitable for cryptographic purposes because it generates predictable sequences of numbers if the seed is known. This predictability can be exploited by attackers to compromise the security of the application.\n\n### General Mitigation Advice\n\nTo mitigate this vulnerability, use a cryptographically secure random number generator. In C++, the `<random>` library provides better alternatives, such as `std::random_device` and `std::mt19937`, which can be used to generate random numbers more securely.\n\n### Source Code Fix Recommendation\n\nReplace the use of `rand()` with a more secure random number generator from the `<random>` library. Here is an example of how to do this:\n\n```cpp\n#include <iostream>\n#include <random>\n\nint main() {\n    // Create a random device and a Mersenne Twister random number generator\n    std::random_device rd;\n    std::mt19937 gen(rd());\n\n    // Define a distribution range\n    std::uniform_int_distribution<> dis(1, 100);\n\n    // Generate a random number\n    int random_number = dis(gen);\n\n    std::cout << \"Secure random number: \" << random_number << std::endl;\n\n    return 0;\n}\n```\n\n### Library Dependencies\n\nTo execute the above code example properly, the following library is required:\n\n- `<random>`: This library provides facilities for generating random numbers.\n\n### OWASP Resources\n\n- [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html)\n\n### Common Weakness Enumeration (CWE)\n\n- [CWE-338: Use of Cryptographically Weak Pseudo-Random Number Generator (PRNG)](https://cwe.mitre.org/data/definitions/338.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS148264"
+                ]
+              }
+            },
+            {
+              "id": "glog-0b62fcbe-c7be-4b5c-8ffd-b5ba5560cb23",
+              "help": {
+                "text": "",
+                "markdown": "### Description\n\nIn C++ programming, using weak or non-cryptographic random number generators, such as the `rand()` function, can lead to vulnerabilities, especially when randomness is critical for security purposes. The `rand()` function is not suitable for cryptographic purposes because it produces predictable sequences of numbers if the seed is known or can be guessed. This can lead to vulnerabilities in applications where randomness is used for generating keys, tokens, or any other security-related data.\n\n### General Mitigation Advice\n\nTo mitigate this vulnerability, use a cryptographically secure random number generator (CSPRNG) instead of `rand()`. In C++, the `<random>` library provides better alternatives, such as `std::random_device` and `std::mt19937`, which can be used to generate random numbers with better randomness properties.\n\n### Source Code Fix Recommendation\n\nReplace the use of `rand() %` with a more secure random number generation approach using the `<random>` library. Below is an example of how to replace `rand()` with a CSPRNG:\n\n```cpp\n#include <iostream>\n#include <random>\n\nint main() {\n    // Create a random device and a Mersenne Twister engine\n    std::random_device rd;\n    std::mt19937 gen(rd());\n\n    // Define the range for random numbers\n    std::uniform_int_distribution<> dis(0, 99); // Example range [0, 99]\n\n    // Generate a random number\n    int random_number = dis(gen);\n\n    std::cout << \"Secure random number: \" << random_number << std::endl;\n\n    return 0;\n}\n```\n\n### Library Dependencies\n\nTo execute the above code example, the following library is required:\n\n- `<random>`: This is part of the C++ Standard Library and does not require any additional dependencies beyond a standard C++ compiler that supports C++11 or later.\n\n### Relevant Links\n\n- [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html)\n- [CWE-338: Use of Cryptographically Weak Pseudo-Random Number Generator (PRNG)](https://cwe.mitre.org/data/definitions/338.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS148264"
+                ]
+              }
+            },
+            {
+              "id": "glog-ed838c14-ca81-4a29-8dba-13cee989d86d",
+              "help": {
+                "text": "",
+                "markdown": "### Description\n\nThe \"Detected Issue with C Function (malloc)\" vulnerability in C++ programming arises when the `malloc` function is used incorrectly, leading to potential memory allocation issues. Specifically, the vulnerability occurs when the size of the memory allocation is not calculated correctly, which can result in buffer overflows, memory corruption, or undefined behavior. In the provided example, `malloc(sizeof(char))` is used, which allocates memory for only a single character. If more memory is needed, this allocation will be insufficient, leading to potential vulnerabilities.\n\n### General Mitigation Advice\n\n1. **Use `new` in C++**: Prefer using C++ memory management techniques such as `new` and `delete` instead of C-style `malloc` and `free`.\n2. **Correct Size Calculation**: Ensure that the size passed to `malloc` is sufficient for the data structure you intend to store.\n3. **Check Return Values**: Always check the return value of `malloc` to ensure that memory allocation was successful.\n4. **Use Safer Alternatives**: Consider using safer alternatives like `std::vector` or `std::string` for dynamic memory management in C++.\n\n### Source Code Fix Recommendation\n\nTo fix the specific vulnerability sink, ensure that the size passed to `malloc` is correctly calculated. If you need to allocate memory for a string of characters, include the null terminator and use the correct size:\n\n```cpp\n#include <cstdlib> // Required for malloc and free\n#include <cstring> // Required for strlen\n\nint main() {\n    const char* exampleString = \"Hello, World!\";\n    size_t length = strlen(exampleString) + 1; // +1 for the null terminator\n    char* buffer = (char*)malloc(length * sizeof(char));\n\n    if (buffer == nullptr) {\n        // Handle memory allocation failure\n        return -1;\n    }\n\n    strcpy(buffer, exampleString); // Copy the string into the allocated buffer\n\n    // Use the buffer...\n\n    free(buffer); // Free the allocated memory\n    return 0;\n}\n```\n\n### Library Dependencies\n\n- `<cstdlib>`: Required for `malloc` and `free`.\n- `<cstring>`: Required for `strlen` and `strcpy`.\n\n### Relevant Links\n\n- [OWASP Top Ten](https://owasp.org/www-project-top-ten/)\n- [OWASP Secure Coding Practices](https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/)\n- [CWE-122: Heap-based Buffer Overflow](https://cwe.mitre.org/data/definitions/122.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS161085"
+                ]
+              }
+            }
+          ],
+          "language": "en-US",
+          "contents": [
+            "localizedData",
+            "nonLocalizedData"
+          ],
+          "isComprehensive": false
+        }
+      },
+      "language": "en-US",
+      "results": [
+        {
+          "ruleId": "glog-f56e8088-0797-4f54-8a55-e7336515b7b5",
+          "kind": "fail",
+          "level": "error",
+          "message": {
+            "text": "\"Avoid Using Weak or Non-Cryptographic Random Number Generators\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Vector.hpp"
+                },
+                "region": {
+                  "startLine": 139,
+                  "startColumn": 13,
+                  "endLine": 139,
+                  "endColumn": 18,
+                  "charOffset": 4446,
+                  "charLength": 5,
+                  "snippet": {
+                    "text": "rand(",
+                    "rendered": {
+                      "text": "rand(",
+                      "markdown": "`rand(`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "Important",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "Cryptography.PRNG.Weak"
+            ]
+          }
+        },
+        {
+          "ruleId": "glog-bc261797-f8d8-4023-8280-008e9922330e",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "Unsecured Web Address"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ReportResults.cpp"
+                },
+                "region": {
+                  "startLine": 456,
+                  "startColumn": 115,
+                  "endLine": 456,
+                  "endColumn": 140,
+                  "charOffset": 26246,
+                  "charLength": 25,
+                  "snippet": {
+                    "text": "http://hpcg-benchmark.org",
+                    "rendered": {
+                      "text": "http://hpcg-benchmark.org",
+                      "markdown": "`http://hpcg-benchmark.org`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "An HTTP-based URL without TLS was detected."
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "src/ReportResults.cpp"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "charOffset": 26246,
+                        "charLength": 25
+                      },
+                      "insertedContent": {
+                        "text": "https://hpcg-benchmark.org"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "Moderate",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "ThreatModel.Integration.HTTP"
+            ]
+          }
+        },
+        {
+          "ruleId": "glog-44006f16-4a31-441b-b8bc-c07c626b3220",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "Unsecured Web Address"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ReportResults.cpp"
+                },
+                "region": {
+                  "startLine": 450,
+                  "startColumn": 94,
+                  "endLine": 450,
+                  "endColumn": 119,
+                  "charOffset": 25772,
+                  "charLength": 25,
+                  "snippet": {
+                    "text": "http://hpcg-benchmark.org",
+                    "rendered": {
+                      "text": "http://hpcg-benchmark.org",
+                      "markdown": "`http://hpcg-benchmark.org`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "An HTTP-based URL without TLS was detected."
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "src/ReportResults.cpp"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "charOffset": 25772,
+                        "charLength": 25
+                      },
+                      "insertedContent": {
+                        "text": "https://hpcg-benchmark.org"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "Moderate",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "ThreatModel.Integration.HTTP"
+            ]
+          }
+        },
+        {
+          "ruleId": "glog-8a7f8721-4986-41ed-a30b-ca3c47df4199",
+          "kind": "fail",
+          "level": "error",
+          "message": {
+            "text": "\"Avoid Using Weak or Non-Cryptographic Random Number Generators\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Vector.hpp"
+                },
+                "region": {
+                  "startLine": 139,
+                  "startColumn": 31,
+                  "endLine": 139,
+                  "endColumn": 39,
+                  "charOffset": 4464,
+                  "charLength": 8,
+                  "snippet": {
+                    "text": "RAND_MAX",
+                    "rendered": {
+                      "text": "RAND_MAX",
+                      "markdown": "`RAND_MAX`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "Important",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "Cryptography.PRNG.Weak"
+            ]
+          }
+        },
+        {
+          "ruleId": "glog-f0c29d33-d36c-4d53-92b8-49cb5bdf9176",
+          "kind": "fail",
+          "level": "error",
+          "message": {
+            "text": "\"Avoid Using Weak or Non-Cryptographic Random Number Generators\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Vector.hpp"
+                },
+                "region": {
+                  "startLine": 130,
+                  "startColumn": 62,
+                  "endLine": 130,
+                  "endColumn": 70,
+                  "charOffset": 4271,
+                  "charLength": 8,
+                  "snippet": {
+                    "text": "RAND_MAX",
+                    "rendered": {
+                      "text": "RAND_MAX",
+                      "markdown": "`RAND_MAX`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "Important",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "Cryptography.PRNG.Weak"
+            ]
+          }
+        },
+        {
+          "ruleId": "glog-075116f7-89ed-48aa-81e8-0101b2b9e580",
+          "kind": "fail",
+          "level": "error",
+          "message": {
+            "text": "\"Avoid Using Weak or Non-Cryptographic Random Number Generators\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Vector.hpp"
+                },
+                "region": {
+                  "startLine": 130,
+                  "startColumn": 44,
+                  "endLine": 130,
+                  "endColumn": 49,
+                  "charOffset": 4253,
+                  "charLength": 5,
+                  "snippet": {
+                    "text": "rand(",
+                    "rendered": {
+                      "text": "rand(",
+                      "markdown": "`rand(`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "Important",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "Cryptography.PRNG.Weak"
+            ]
+          }
+        },
+        {
+          "ruleId": "glog-709f9bf3-62fc-40b1-8192-c0c252c26776",
+          "kind": "fail",
+          "level": "note",
+          "message": {
+            "text": "\"Identified Issue with C Function (strlen)\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/init.cpp"
+                },
+                "region": {
+                  "startLine": 81,
+                  "startColumn": 13,
+                  "endLine": 81,
+                  "endColumn": 29,
+                  "charOffset": 2757,
+                  "charLength": 16,
+                  "snippet": {
+                    "text": "strlen( prefix )",
+                    "rendered": {
+                      "text": "strlen( prefix )",
+                      "markdown": "`strlen( prefix )`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "If a string is missing a null terminator, strlen will read past the end of the buffer"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "src/init.cpp"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "charOffset": 2757,
+                        "charLength": 16
+                      },
+                      "insertedContent": {
+                        "text": "strlen_s( prefix , <size of  prefix >)"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "description": {
+                "text": "If a string is missing a null terminator, strlen will read past the end of the buffer"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "src/init.cpp"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "charOffset": 2757,
+                        "charLength": 16
+                      },
+                      "insertedContent": {
+                        "text": "strnlen( prefix , <size of  prefix >)"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "BestPractice",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "API.DangerousAPI.ProblematicFunction"
+            ]
+          }
+        },
+        {
+          "ruleId": "glog-b03db43a-2607-4b73-99ce-253420bab44c",
+          "kind": "fail",
+          "level": "note",
+          "message": {
+            "text": "Detected Vulnerability in C Function (strlen)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/init.cpp"
+                },
+                "region": {
+                  "startLine": 135,
+                  "startColumn": 27,
+                  "endLine": 135,
+                  "endColumn": 45,
+                  "charOffset": 4648,
+                  "charLength": 18,
+                  "snippet": {
+                    "text": "strlen(cparams[j])",
+                    "rendered": {
+                      "text": "strlen(cparams[j])",
+                      "markdown": "`strlen(cparams[j])`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "If a string is missing a null terminator, strlen will read past the end of the buffer"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "src/init.cpp"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "charOffset": 4648,
+                        "charLength": 18
+                      },
+                      "insertedContent": {
+                        "text": "strlen_s(cparams[j], <size of cparams[j]>)"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "description": {
+                "text": "If a string is missing a null terminator, strlen will read past the end of the buffer"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "src/init.cpp"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "charOffset": 4648,
+                        "charLength": 18
+                      },
+                      "insertedContent": {
+                        "text": "strnlen(cparams[j], <size of cparams[j]>)"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "BestPractice",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "API.DangerousAPI.ProblematicFunction"
+            ]
+          }
+        },
+        {
+          "ruleId": "glog-69b80156-6290-42fd-bbd6-a96ee06138b0",
+          "kind": "fail",
+          "level": "note",
+          "message": {
+            "text": "\"Identified Issue with C Function (malloc)\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/init.cpp"
+                },
+                "region": {
+                  "startLine": 121,
+                  "startColumn": 19,
+                  "endLine": 121,
+                  "endColumn": 37,
+                  "charOffset": 4079,
+                  "charLength": 18,
+                  "snippet": {
+                    "text": "malloc(sizeof(int)",
+                    "rendered": {
+                      "text": "malloc(sizeof(int)",
+                      "markdown": "`malloc(sizeof(int)`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "If the value provided to malloc is the result of unsafe integer math, it can result in an exploitable condition. "
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "src/init.cpp"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "charOffset": 4079,
+                        "charLength": 18
+                      },
+                      "insertedContent": {
+                        "text": "calloc(<number of elements>, <size of each element>)"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "BestPractice",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "API.DangerousAPI.ProblematicFunction"
+            ]
+          }
+        },
+        {
+          "ruleId": "glog-25111b1e-0f2c-436f-87b5-ca53e6b31e78",
+          "kind": "fail",
+          "level": "note",
+          "message": {
+            "text": "Detected Vulnerability in C Function (strlen)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/init.cpp"
+                },
+                "region": {
+                  "startLine": 138,
+                  "startColumn": 24,
+                  "endLine": 138,
+                  "endColumn": 40,
+                  "charOffset": 4779,
+                  "charLength": 16,
+                  "snippet": {
+                    "text": "strlen(\"--tol=\")",
+                    "rendered": {
+                      "text": "strlen(\"--tol=\")",
+                      "markdown": "`strlen(\"--tol=\")`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "If a string is missing a null terminator, strlen will read past the end of the buffer"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "src/init.cpp"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "charOffset": 4779,
+                        "charLength": 16
+                      },
+                      "insertedContent": {
+                        "text": "strlen_s(\"--tol=\", <size of \"--tol=\">)"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "description": {
+                "text": "If a string is missing a null terminator, strlen will read past the end of the buffer"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "src/init.cpp"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "charOffset": 4779,
+                        "charLength": 16
+                      },
+                      "insertedContent": {
+                        "text": "strnlen(\"--tol=\", <size of \"--tol=\">)"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "BestPractice",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "API.DangerousAPI.ProblematicFunction"
+            ]
+          }
+        },
+        {
+          "ruleId": "glog-b6dd3cd9-26e2-47e0-bb1c-9a8d426b77ce",
+          "kind": "fail",
+          "level": "note",
+          "message": {
+            "text": "\"Detected Issue with C Function (malloc)\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/test_rochpcg.cpp"
+                },
+                "region": {
+                  "startLine": 130,
+                  "startColumn": 24,
+                  "endLine": 130,
+                  "endColumn": 43,
+                  "charOffset": 7025,
+                  "charLength": 19,
+                  "snippet": {
+                    "text": "malloc(sizeof(char)",
+                    "rendered": {
+                      "text": "malloc(sizeof(char)",
+                      "markdown": "`malloc(sizeof(char)`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "If the value provided to malloc is the result of unsafe integer math, it can result in an exploitable condition. "
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "src/test_rochpcg.cpp"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "charOffset": 7025,
+                        "charLength": 19
+                      },
+                      "insertedContent": {
+                        "text": "calloc(<number of elements>, <size of each element>)"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "BestPractice",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "API.DangerousAPI.ProblematicFunction"
+            ]
+          }
+        },
+        {
+          "ruleId": "glog-ce4366a0-1b0a-4813-be40-091be22a7ef3",
+          "kind": "fail",
+          "level": "note",
+          "message": {
+            "text": "\"Detected Issue with C Function (malloc)\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/test_rochpcg.cpp"
+                },
+                "region": {
+                  "startLine": 132,
+                  "startColumn": 24,
+                  "endLine": 132,
+                  "endColumn": 43,
+                  "charOffset": 7125,
+                  "charLength": 19,
+                  "snippet": {
+                    "text": "malloc(sizeof(char)",
+                    "rendered": {
+                      "text": "malloc(sizeof(char)",
+                      "markdown": "`malloc(sizeof(char)`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "If the value provided to malloc is the result of unsafe integer math, it can result in an exploitable condition. "
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "src/test_rochpcg.cpp"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "charOffset": 7125,
+                        "charLength": 19
+                      },
+                      "insertedContent": {
+                        "text": "calloc(<number of elements>, <size of each element>)"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "BestPractice",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "API.DangerousAPI.ProblematicFunction"
+            ]
+          }
+        },
+        {
+          "ruleId": "glog-0e20f426-d486-474c-b1f6-7d1e8fb61ad9",
+          "kind": "fail",
+          "level": "note",
+          "message": {
+            "text": "\"Detected Issue with C Function (malloc)\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/test_rochpcg.cpp"
+                },
+                "region": {
+                  "startLine": 127,
+                  "startColumn": 24,
+                  "endLine": 127,
+                  "endColumn": 43,
+                  "charOffset": 6874,
+                  "charLength": 19,
+                  "snippet": {
+                    "text": "malloc(sizeof(char)",
+                    "rendered": {
+                      "text": "malloc(sizeof(char)",
+                      "markdown": "`malloc(sizeof(char)`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "If the value provided to malloc is the result of unsafe integer math, it can result in an exploitable condition. "
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "src/test_rochpcg.cpp"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "charOffset": 6874,
+                        "charLength": 19
+                      },
+                      "insertedContent": {
+                        "text": "calloc(<number of elements>, <size of each element>)"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "BestPractice",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "API.DangerousAPI.ProblematicFunction"
+            ]
+          }
+        },
+        {
+          "ruleId": "glog-0b2ee181-0b80-42de-becf-16baebd0fbd6",
+          "kind": "fail",
+          "level": "note",
+          "message": {
+            "text": "\"Detected Issue with C Function (malloc)\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/test_rochpcg.cpp"
+                },
+                "region": {
+                  "startLine": 131,
+                  "startColumn": 24,
+                  "endLine": 131,
+                  "endColumn": 43,
+                  "charOffset": 7075,
+                  "charLength": 19,
+                  "snippet": {
+                    "text": "malloc(sizeof(char)",
+                    "rendered": {
+                      "text": "malloc(sizeof(char)",
+                      "markdown": "`malloc(sizeof(char)`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "If the value provided to malloc is the result of unsafe integer math, it can result in an exploitable condition. "
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "src/test_rochpcg.cpp"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "charOffset": 7075,
+                        "charLength": 19
+                      },
+                      "insertedContent": {
+                        "text": "calloc(<number of elements>, <size of each element>)"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "BestPractice",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "API.DangerousAPI.ProblematicFunction"
+            ]
+          }
+        },
+        {
+          "ruleId": "glog-3b48d918-1d55-4d7c-bdf7-5643bdd0dac4",
+          "kind": "fail",
+          "level": "note",
+          "message": {
+            "text": "\"Detected Issue with C Function (malloc)\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/test_rochpcg.cpp"
+                },
+                "region": {
+                  "startLine": 128,
+                  "startColumn": 24,
+                  "endLine": 128,
+                  "endColumn": 43,
+                  "charOffset": 6925,
+                  "charLength": 19,
+                  "snippet": {
+                    "text": "malloc(sizeof(char)",
+                    "rendered": {
+                      "text": "malloc(sizeof(char)",
+                      "markdown": "`malloc(sizeof(char)`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "If the value provided to malloc is the result of unsafe integer math, it can result in an exploitable condition. "
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "src/test_rochpcg.cpp"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "charOffset": 6925,
+                        "charLength": 19
+                      },
+                      "insertedContent": {
+                        "text": "calloc(<number of elements>, <size of each element>)"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "BestPractice",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "API.DangerousAPI.ProblematicFunction"
+            ]
+          }
+        },
+        {
+          "ruleId": "glog-3660045b-6409-402c-8eb8-a89a4413e94f",
+          "kind": "fail",
+          "level": "error",
+          "message": {
+            "text": "\"Avoid Using Weak or Non-Cryptographic Random Number Generators\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MultiColoring.cpp"
+                },
+                "region": {
+                  "startLine": 285,
+                  "startColumn": 39,
+                  "endLine": 285,
+                  "endColumn": 47,
+                  "charOffset": 9691,
+                  "charLength": 8,
+                  "snippet": {
+                    "text": "rand() %",
+                    "rendered": {
+                      "text": "rand() %",
+                      "markdown": "`rand() %`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "Important",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "Cryptography.PRNG.Weak"
+            ]
+          }
+        },
+        {
+          "ruleId": "glog-fa0e1609-1814-42b4-bf1c-519aa319e887",
+          "kind": "fail",
+          "level": "error",
+          "message": {
+            "text": "\"Avoid Using Weak or Non-Cryptographic Random Number Generators\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MultiColoring.cpp"
+                },
+                "region": {
+                  "startLine": 285,
+                  "startColumn": 39,
+                  "endLine": 285,
+                  "endColumn": 44,
+                  "charOffset": 9691,
+                  "charLength": 5,
+                  "snippet": {
+                    "text": "rand(",
+                    "rendered": {
+                      "text": "rand(",
+                      "markdown": "`rand(`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "Important",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "Cryptography.PRNG.Weak"
+            ]
+          }
+        },
+        {
+          "ruleId": "glog-cd11d1f9-b073-4dfb-9f70-236845df0568",
+          "kind": "fail",
+          "level": "error",
+          "message": {
+            "text": "\"Avoid Using Weak or Non-Cryptographic Random Number Generators\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MultiColoring.cpp"
+                },
+                "region": {
+                  "startLine": 284,
+                  "startColumn": 39,
+                  "endLine": 284,
+                  "endColumn": 44,
+                  "charOffset": 9628,
+                  "charLength": 5,
+                  "snippet": {
+                    "text": "rand(",
+                    "rendered": {
+                      "text": "rand(",
+                      "markdown": "`rand(`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "Important",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "Cryptography.PRNG.Weak"
+            ]
+          }
+        },
+        {
+          "ruleId": "glog-0b62fcbe-c7be-4b5c-8ffd-b5ba5560cb23",
+          "kind": "fail",
+          "level": "error",
+          "message": {
+            "text": "\"Avoid Using Weak or Non-Cryptographic Random Number Generators\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MultiColoring.cpp"
+                },
+                "region": {
+                  "startLine": 284,
+                  "startColumn": 39,
+                  "endLine": 284,
+                  "endColumn": 47,
+                  "charOffset": 9628,
+                  "charLength": 8,
+                  "snippet": {
+                    "text": "rand() %",
+                    "rendered": {
+                      "text": "rand() %",
+                      "markdown": "`rand() %`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "Important",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "Cryptography.PRNG.Weak"
+            ]
+          }
+        },
+        {
+          "ruleId": "glog-ed838c14-ca81-4a29-8dba-13cee989d86d",
+          "kind": "fail",
+          "level": "note",
+          "message": {
+            "text": "\"Detected Issue with C Function (malloc)\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/test_rochpcg.cpp"
+                },
+                "region": {
+                  "startLine": 129,
+                  "startColumn": 24,
+                  "endLine": 129,
+                  "endColumn": 43,
+                  "charOffset": 6975,
+                  "charLength": 19,
+                  "snippet": {
+                    "text": "malloc(sizeof(char)",
+                    "rendered": {
+                      "text": "malloc(sizeof(char)",
+                      "markdown": "`malloc(sizeof(char)`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "If the value provided to malloc is the result of unsafe integer math, it can result in an exploitable condition. "
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "src/test_rochpcg.cpp"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "charOffset": 6975,
+                        "charLength": 19
+                      },
+                      "insertedContent": {
+                        "text": "calloc(<number of elements>, <size of each element>)"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "BestPractice",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "API.DangerousAPI.ProblematicFunction"
+            ]
+          }
+        }
+      ],
+      "newlineSequences": [
+        "\r\n",
+        "\n"
+      ]
+    }
+  ]
+}
