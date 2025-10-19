@@ -12,26 +12,40 @@
           "informationUri": "https://www.glog.ai",
           "rules": [
             {
-              "id": "7986b1a9-6214-38ec-9ae5-bd0c7e6badfd",
+              "id": "ea2090db-8b01-38e3-9798-62eddc9f6319",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\nThe \"Prohibited C Function Identified\" vulnerability refers to the use of C functions that are considered unsafe due to their potential to cause buffer overflows, format string vulnerabilities, or other security issues. In this case, the function `localtime` is used, which is not thread-safe and can lead to data races if used in a multithreaded context.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use thread-safe alternatives to `localtime`, such as `localtime_r` in POSIX compliant systems. This function requires an additional parameter, a pointer to a `struct tm`, where the result is stored.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the code:\n\n```cpp\n#include <ctime>\n\n// ...\n\ntime_t rawtime;\nstruct tm timeinfo;\n\ntime(&rawtime);\nlocaltime_r(&rawtime, &timeinfo);\nptm = &timeinfo;\n```\n\n## Library Dependencies\n\nThe code example requires the following library to execute properly:\n\n- `<ctime>`\n\n## References\n\n- [OWASP C++ Secure Coding Practices](https://cheatsheetseries.owasp.org/cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.html)\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)"
+                "markdown": "## Description\n\nIn C++ programming, the vulnerability \"Avoid Using Non-Cryptographic or Weak Random Number Generators\" refers to the use of weak or non-cryptographic random number generators that can lead to predictable or easily guessable values. This can be exploited by attackers to predict the outcome of the program, leading to security breaches.\n\nIn the given code snippet, `rand()` is a weak random number generator as it uses a deterministic algorithm and can produce predictable numbers if the seed is known.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, use a strong cryptographic random number generator. In C++, you can use functions like `std::random_device`, `std::mt19937` (Mersenne Twister 19937 generator), or `std::uniform_int_distribution` from the `<random>` library.\n\n## Source Code Fix Recommendation\n\nHere is a fixed version of the code:\n\n```cpp\n#include <random>\n\nstd::random_device rd;\nstd::mt19937 gen(rd());\nstd::uniform_int_distribution<> distr(0, 7);\n\ncolor1 = (A.nblocks < 8) ? distr(gen) : A.nblocks;\n```\n\n## Library Dependencies\n\nThe fixed code requires the `<random>` library.\n\n## References\n\n- [CWE-338: Use of Cryptographically Weak PRNG](https://cwe.mitre.org/data/definitions/338.html)"
               },
               "properties": {
                 "tags": [
-                  "DS154189"
+                  "DS148264"
                 ]
               }
             },
             {
-              "id": "b6632b9c-7b16-3fc5-9e70-83aa9be79b2f",
+              "id": "18b6ec03-0695-3f34-8e16-6a93d975d3dc",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability refers to the use of insecure C library functions that can lead to various security issues such as buffer overflows, format string vulnerabilities, integer overflows, etc. In this case, the function `localtime` is used, which is not thread-safe and can lead to data races if used in a multi-threaded context.\n\n## Mitigation Advice\n\nAvoid using non-thread-safe functions in multi-threaded applications. Instead, use their thread-safe counterparts. In this case, use `localtime_r` instead of `localtime`.\n\n## Source Code Fix Recommendation\n\nHere is how you can fix the code:\n\n```cpp\n#include <time.h>\n\ntime_t rawtime;\nstruct tm * ptm;\n\ntime(&rawtime);\nptm = localtime(&rawtime);\n\n// Replace the above localtime call with the following thread-safe version\nstruct tm result;\nptm = localtime_r(&rawtime, &result);\n```\n\n## Library Dependencies\n\nThe code example requires the following library:\n\n- time.h\n\n## References\n\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)"
+                "markdown": "## Description\n\nThe \"Avoid Using Non-Cryptographic or Weak Random Number Generators\" vulnerability in C++ refers to the use of weak or non-cryptographic random number generators that can lead to predictable or easily guessable values. This can be exploited by an attacker to predict the outcome of the program, leading to a variety of security issues.\n\nIn the provided code snippet, the `rand()` function is used, which is a weak random number generator. It generates pseudo-random numbers that are not suitable for security-sensitive operations.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, use a strong, cryptographic random number generator. In C++, you can use functions provided by the `<random>` library, such as `std::random_device` or `std::mt19937`.\n\n## Source Code Fix Recommendation\n\nHere is a fixed version of the code snippet:\n\n```cpp\n#include <random>\n\nstd::random_device rd;\nstd::mt19937 gen(rd());\nstd::uniform_int_distribution<> distr(0, 7);\n\ncolor2 = (A.nblocks < 8) ? distr(gen) : A.nblocks + 1;\n```\n\nIn this code, `std::random_device` is used to seed the Mersenne Twister engine (`std::mt19937`), which is a strong random number generator. `std::uniform_int_distribution<>` is used to generate a random number in the range [0, 7].\n\n## Library Dependencies\n\nThe fixed code requires the `<random>` library.\n\n## References\n\n- [CWE-338: Use of Cryptographically Weak PRNG](https://cwe.mitre.org/data/definitions/338.html)"
               },
               "properties": {
                 "tags": [
-                  "DS154189"
+                  "DS148264",
+                  "18b6ec03-0695-3f34-8e16-6a93d975d3dc"
+                ]
+              }
+            },
+            {
+              "id": "f257d21d-88d1-3d2c-973f-6c316dd7c0b5",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\nThe \"Avoid Using Non-Cryptographic or Weak Random Number Generators\" vulnerability in C++ refers to the use of weak or non-cryptographic random number generators that can lead to predictable or easily guessable values. This can be exploited by an attacker to predict the outcome of the program, leading to a variety of security issues.\n\nIn the provided code snippet, the `rand()` function is used, which is a weak random number generator. It generates pseudo-random numbers that are not suitable for security-sensitive operations.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, use a strong, cryptographic random number generator. In C++, you can use functions provided by the `<random>` library, such as `std::random_device` or `std::mt19937`.\n\n## Source Code Fix Recommendation\n\nHere is a fixed version of the code snippet:\n\n```cpp\n#include <random>\n\nstd::random_device rd;\nstd::mt19937 gen(rd());\nstd::uniform_int_distribution<> distr(0, 7);\n\ncolor2 = (A.nblocks < 8) ? distr(gen) : A.nblocks + 1;\n```\n\nIn this code, `std::random_device` is used to seed the Mersenne Twister engine (`std::mt19937`), which is a strong random number generator. `std::uniform_int_distribution<>` is used to generate a random number in the range [0, 7].\n\n## Library Dependencies\n\nThe fixed code requires the `<random>` library.\n\n## References\n\n- [CWE-338: Use of Cryptographically Weak PRNG](https://cwe.mitre.org/data/definitions/338.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS148264",
+                  "f257d21d-88d1-3d2c-973f-6c316dd7c0b5"
                 ]
               }
             },
@@ -72,10 +86,10 @@
               }
             },
             {
-              "id": "c246c119-09d6-3d4f-b028-f570df460096",
+              "id": "f24b3180-f41c-35e3-b58f-43ea52f7ae11",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability refers to the use of insecure C library functions in C++ code. These functions are often prone to buffer overflow attacks, format string vulnerabilities, or other types of security issues. In the provided code snippet, the `fopen` function is used, which can lead to vulnerabilities if the file name or path is manipulated by an attacker.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use safer alternatives to these functions. In the case of `fopen`, consider using `fopen_s` which is a safer version of `fopen`. It's also important to validate and sanitize all inputs, especially those that can affect file paths or names.\n\n## Source Code Fix Recommendation\n\nReplace the `fopen` function with `fopen_s`:\n\n```cpp\nFILE* hpcgStream;\nerrno_t err = fopen_s(&hpcgStream, \"hpcg.dat\", \"r\");\nif (err != 0) {\n    // Handle error\n}\n```\n\n## Library Dependencies\n\nThe code example requires the following library:\n\n- `stdio.h`\n\n## References\n\n- [OWASP C++ Secure Coding Practices](https://cheatsheetseries.owasp.org/cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.html)\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)\n\nPlease note that the links provided are accessible to anonymous users at the time of writing this report."
+                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability in C++ refers to the use of certain C standard library functions that are known to be dangerous due to their potential to cause buffer overflows, format string vulnerabilities, or other problems. These functions are often prohibited in secure coding standards. In this case, the function `localtime()` is used, which is not thread-safe and can lead to data races if used in a multi-threaded context.\n\n## Mitigation Advice\n\nAvoid using non-thread-safe functions like `localtime()`. Instead, use thread-safe alternatives such as `localtime_r()`. Always consider thread safety when writing code that may be used in a multi-threaded context.\n\n## Source Code Fix Recommendation\n\nReplace the `localtime()` function with the `localtime_r()` function. Here is an example of how to do it:\n\n```cpp\n#include <ctime>\n\ntime_t rawtime;\nstruct tm timeinfo;\n\ntime(&rawtime);\nlocaltime_r(&rawtime, &timeinfo);\n```\n\n## Library Dependencies\n\nThe code example requires the `<ctime>` library.\n\n## References\n\n- [OWASP C++ Secure Coding Practices](https://cheatsheetseries.owasp.org/cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.html)\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)"
               },
               "properties": {
                 "tags": [
@@ -84,134 +98,10 @@
               }
             },
             {
-              "id": "5c6f14f3-bdde-32d2-9e4e-827f0b4ffa08",
+              "id": "72ea9aa4-b789-3dbd-a704-f4d50086a615",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability in C++ refers to the use of certain C standard library functions that are known to be risky and can lead to various security issues such as buffer overflows, format string vulnerabilities, integer overflows, etc. These functions are often prohibited in secure coding standards due to their inherent risks.\n\nThe provided code snippet `A.geom->rank == 0 && verbose` does not seem to contain any prohibited C function. It's a simple boolean expression checking if the `rank` attribute of the `geom` object of `A` is equal to `0` and if `verbose` is true. \n\n## Mitigation Advice\n\nTo mitigate the risks associated with prohibited C functions:\n\n1. Avoid using risky C standard library functions. Use safer alternatives whenever possible.\n2. Always validate and sanitize input data.\n3. Use static code analysis tools to detect the use of prohibited functions.\n4. Follow secure coding standards and best practices.\n\n## Source Code Fix Recommendation\n\nAs the provided code snippet does not seem to contain any prohibited C function, no specific fix can be recommended for it.\n\n## Library Dependencies\n\nThe code snippet does not seem to require any specific library dependencies as it's a simple boolean expression. However, the actual dependencies might depend on the definitions and implementations of `A`, `geom`, `rank`, and `verbose`.\n\n## OWASP and CWE Links\n\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)\n\nPlease note that the links provided are active and accessible to anonymous users at the time of writing this report."
-              },
-              "properties": {
-                "tags": [
-                  "DS154189"
-                ]
-              }
-            },
-            {
-              "id": "06d9bab5-878e-3baf-b88d-abe618324fe4",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability in C++ refers to the use of certain C standard library functions that are known to be risky and can lead to various security issues such as buffer overflows, format string vulnerabilities, integer overflows, etc. These functions are often prohibited in secure coding standards due to their inherent risks.\n\nThe provided code snippet `A.geom->rank == 0 && verbose` does not seem to contain any prohibited C function. It's a simple boolean expression checking if the `rank` attribute of the `geom` object of `A` is equal to `0` and if `verbose` is true. \n\n## Mitigation Advice\n\nTo mitigate the risks associated with prohibited C functions:\n\n1. Avoid using risky C standard library functions. Use safer alternatives whenever possible.\n2. Always validate and sanitize input data.\n3. Use static code analysis tools to detect the use of prohibited functions.\n4. Follow secure coding standards and best practices.\n\n## Source Code Fix Recommendation\n\nAs the provided code snippet does not seem to contain any prohibited C function, no specific fix can be recommended for it.\n\n## Library Dependencies\n\nThe code snippet does not seem to require any specific library dependencies as it's a simple boolean expression. However, the actual dependencies might depend on the definitions and implementations of `A`, `geom`, `rank`, and `verbose`.\n\n## OWASP and CWE Links\n\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)\n\nPlease note that the links provided are active and accessible to anonymous users at the time of writing this report."
-              },
-              "properties": {
-                "tags": [
-                  "DS154189"
-                ]
-              }
-            },
-            {
-              "id": "f582af8f-84fd-350b-a932-e594a442a9ea",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability in C++ refers to the use of certain C standard library functions that are known to be risky and can lead to various security issues such as buffer overflows, format string vulnerabilities, integer overflows, etc. These functions are often prohibited in secure coding standards due to their inherent risks.\n\nThe provided code snippet `A.geom->rank == 0 && verbose` does not seem to contain any prohibited C function. It's a simple boolean expression checking if the `rank` attribute of the `geom` object of `A` is equal to `0` and if `verbose` is true. \n\n## Mitigation Advice\n\nTo mitigate the risks associated with prohibited C functions:\n\n1. Avoid using risky C standard library functions. Use safer alternatives whenever possible.\n2. Always validate and sanitize input data.\n3. Use static code analysis tools to detect the use of prohibited functions.\n4. Follow secure coding standards and best practices.\n\n## Source Code Fix Recommendation\n\nAs the provided code snippet does not seem to contain any prohibited C function, no specific fix can be recommended for it.\n\n## Library Dependencies\n\nThe code snippet does not seem to require any specific library dependencies as it's a simple boolean expression. However, the actual dependencies might depend on the definitions and implementations of `A`, `geom`, `rank`, and `verbose`.\n\n## OWASP and CWE Links\n\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)\n\nPlease note that the links provided are active and accessible to anonymous users at the time of writing this report."
-              },
-              "properties": {
-                "tags": [
-                  "DS154189"
-                ]
-              }
-            },
-            {
-              "id": "d8ee336f-ed65-3736-b8ec-56efaefc3d0a",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability in C++ refers to the use of certain C standard library functions that are known to be risky and can lead to various security issues such as buffer overflows, format string vulnerabilities, integer overflows, etc. These functions are often prohibited in secure coding standards due to their inherent risks.\n\nThe provided code snippet `A.geom->rank == 0 && verbose` does not seem to contain any prohibited C function. It's a simple boolean expression checking if the `rank` attribute of the `geom` object of `A` is equal to `0` and if `verbose` is true. \n\n## Mitigation Advice\n\nTo mitigate the risks associated with prohibited C functions:\n\n1. Avoid using risky C standard library functions. Use safer alternatives whenever possible.\n2. Always validate and sanitize input data.\n3. Use static code analysis tools to detect the use of prohibited functions.\n4. Follow secure coding standards and best practices.\n\n## Source Code Fix Recommendation\n\nAs the provided code snippet does not seem to contain any prohibited C function, no specific fix can be recommended for it.\n\n## Library Dependencies\n\nThe code snippet does not seem to require any specific library dependencies as it's a simple boolean expression. However, the actual dependencies might depend on the definitions and implementations of `A`, `geom`, `rank`, and `verbose`.\n\n## OWASP and CWE Links\n\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)\n\nPlease note that the links provided are active and accessible to anonymous users at the time of writing this report."
-              },
-              "properties": {
-                "tags": [
-                  "DS154189"
-                ]
-              }
-            },
-            {
-              "id": "18b6ec03-0695-3f34-8e16-6a93d975d3dc",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nThe \"Avoid Using Non-Cryptographic or Weak Random Number Generators\" vulnerability in C++ refers to the use of weak or non-cryptographic random number generators that can lead to predictable or easily guessable values. This can be exploited by an attacker to predict the outcome of the program, leading to a variety of security issues.\n\nIn the provided code snippet, the `rand()` function is used, which is a weak random number generator. It generates pseudo-random numbers that are not suitable for security-sensitive operations.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, use a strong, cryptographic random number generator. In C++, you can use functions provided by the `<random>` library, such as `std::random_device` or `std::mt19937`.\n\n## Source Code Fix Recommendation\n\nHere is a fixed version of the code snippet:\n\n```cpp\n#include <random>\n\nstd::random_device rd;\nstd::mt19937 gen(rd());\nstd::uniform_int_distribution<> distr(0, 7);\n\ncolor2 = (A.nblocks < 8) ? distr(gen) : A.nblocks + 1;\n```\n\nIn this code, `std::random_device` is used to seed the Mersenne Twister engine (`std::mt19937`), which is a strong random number generator. `std::uniform_int_distribution<>` is used to generate a random number in the range [0, 7].\n\n## Library Dependencies\n\nThe fixed code requires the `<random>` library.\n\n## References\n\n- [CWE-338: Use of Cryptographically Weak PRNG](https://cwe.mitre.org/data/definitions/338.html)"
-              },
-              "properties": {
-                "tags": [
-                  "DS148264",
-                  "18b6ec03-0695-3f34-8e16-6a93d975d3dc"
-                ]
-              }
-            },
-            {
-              "id": "f257d21d-88d1-3d2c-973f-6c316dd7c0b5",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nThe \"Avoid Using Non-Cryptographic or Weak Random Number Generators\" vulnerability in C++ refers to the use of weak or non-cryptographic random number generators that can lead to predictable or easily guessable values. This can be exploited by an attacker to predict the outcome of the program, leading to a variety of security issues.\n\nIn the provided code snippet, the `rand()` function is used, which is a weak random number generator. It generates pseudo-random numbers that are not suitable for security-sensitive operations.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, use a strong, cryptographic random number generator. In C++, you can use functions provided by the `<random>` library, such as `std::random_device` or `std::mt19937`.\n\n## Source Code Fix Recommendation\n\nHere is a fixed version of the code snippet:\n\n```cpp\n#include <random>\n\nstd::random_device rd;\nstd::mt19937 gen(rd());\nstd::uniform_int_distribution<> distr(0, 7);\n\ncolor2 = (A.nblocks < 8) ? distr(gen) : A.nblocks + 1;\n```\n\nIn this code, `std::random_device` is used to seed the Mersenne Twister engine (`std::mt19937`), which is a strong random number generator. `std::uniform_int_distribution<>` is used to generate a random number in the range [0, 7].\n\n## Library Dependencies\n\nThe fixed code requires the `<random>` library.\n\n## References\n\n- [CWE-338: Use of Cryptographically Weak PRNG](https://cwe.mitre.org/data/definitions/338.html)"
-              },
-              "properties": {
-                "tags": [
-                  "DS148264",
-                  "f257d21d-88d1-3d2c-973f-6c316dd7c0b5"
-                ]
-              }
-            },
-            {
-              "id": "ea2090db-8b01-38e3-9798-62eddc9f6319",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nIn C++ programming, the vulnerability \"Avoid Using Non-Cryptographic or Weak Random Number Generators\" refers to the use of weak or non-cryptographic random number generators that can lead to predictable or easily guessable values. This can be exploited by attackers to predict the outcome of the program, leading to security breaches.\n\nIn the given code snippet, `rand()` is a weak random number generator as it uses a deterministic algorithm and can produce predictable numbers if the seed is known.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, use a strong cryptographic random number generator. In C++, you can use functions like `std::random_device`, `std::mt19937` (Mersenne Twister 19937 generator), or `std::uniform_int_distribution` from the `<random>` library.\n\n## Source Code Fix Recommendation\n\nHere is a fixed version of the code:\n\n```cpp\n#include <random>\n\nstd::random_device rd;\nstd::mt19937 gen(rd());\nstd::uniform_int_distribution<> distr(0, 7);\n\ncolor1 = (A.nblocks < 8) ? distr(gen) : A.nblocks;\n```\n\n## Library Dependencies\n\nThe fixed code requires the `<random>` library.\n\n## References\n\n- [CWE-338: Use of Cryptographically Weak PRNG](https://cwe.mitre.org/data/definitions/338.html)"
-              },
-              "properties": {
-                "tags": [
-                  "DS148264",
-                  "ea2090db-8b01-38e3-9798-62eddc9f6319"
-                ]
-              }
-            },
-            {
-              "id": "a268c044-5c2f-3068-8daf-620ad9a7cb54",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nIn C++ programming, the vulnerability \"Avoid Using Non-Cryptographic or Weak Random Number Generators\" refers to the use of weak or non-cryptographic random number generators that can lead to predictable or easily guessable values. This can be exploited by attackers to predict the outcome of the program, leading to security breaches.\n\nIn the given code snippet, `rand()` is a weak random number generator as it uses a deterministic algorithm and can produce predictable numbers if the seed is known.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, use a strong cryptographic random number generator. In C++, you can use functions like `std::random_device`, `std::mt19937` (Mersenne Twister 19937 generator), or `std::uniform_int_distribution` from the `<random>` library.\n\n## Source Code Fix Recommendation\n\nHere is a fixed version of the code:\n\n```cpp\n#include <random>\n\nstd::random_device rd;\nstd::mt19937 gen(rd());\nstd::uniform_int_distribution<> distr(0, 7);\n\ncolor1 = (A.nblocks < 8) ? distr(gen) : A.nblocks;\n```\n\n## Library Dependencies\n\nThe fixed code requires the `<random>` library.\n\n## References\n\n- [CWE-338: Use of Cryptographically Weak PRNG](https://cwe.mitre.org/data/definitions/338.html)"
-              },
-              "properties": {
-                "tags": [
-                  "DS148264",
-                  "a268c044-5c2f-3068-8daf-620ad9a7cb54"
-                ]
-              }
-            },
-            {
-              "id": "31fda8ef-76b3-3c6b-821d-75864e0f498d",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability refers to the use of insecure C library functions in C++ code. These functions are often prone to buffer overflow attacks, format string vulnerabilities, or other types of security issues. In the provided code, the `fopen` function is used, which can lead to vulnerabilities if the file name or path is manipulated by an attacker.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use safer alternatives to these functions. In the case of file operations, C++ provides the `fstream` library which is safer and more flexible than the C-style `fopen` function. \n\n## Source Code Fix Recommendation\n\nReplace the `fopen` function with the `ofstream` object from the `fstream` library. Here is how you can do it:\n\n```cpp\n#include <fstream>\n\nstd::ofstream fb;\nfb.open(\"b.dat\");\n```\n\n## Library Dependencies\n\nThe code example requires the following library:\n\n- `stdio.h` for `fopen` function\n\nThe fixed code requires the following library:\n\n- `fstream` for `ofstream` object\n\n## References\n\n- [OWASP C++](https://owasp.org/www-pdf-archive/OWASP_SCP_Quick_Reference_Guide_v2.pdf)\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)"
-              },
-              "properties": {
-                "tags": [
-                  "DS154189"
-                ]
-              }
-            },
-            {
-              "id": "60ed7733-d81a-3bbf-9c70-9acc6d103e58",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nThe \"Prohibited C Function Identified\" vulnerability refers to the use of C library functions that are known to be dangerous due to their potential to cause buffer overflows, format string vulnerabilities, or other issues that can lead to arbitrary code execution or denial of service. In this case, the `fopen` function is used, which can lead to vulnerabilities if the file name or mode is not properly validated or controlled.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use safer alternatives to these functions, or to use these functions in a way that their risks are mitigated. For `fopen`, it is important to ensure that the file name and mode are properly validated and controlled, and that errors are properly handled. \n\n## Source Code Fix Recommendation\n\nHere is a safer way to use `fopen`:\n\n```cpp\n#include <stdio.h>\n\nFILE *fxexact;\nif ((fxexact = fopen(\"xexact.dat\", \"w\")) == NULL) {\n    printf(\"Error! opening file\");\n    // Program exits if the file pointer returns NULL.\n    exit(1);\n}\n```\n\nIn this code, we check if `fopen` returns `NULL`, which indicates an error, and handle the error appropriately.\n\n## Library Dependencies\n\nThe code example requires the `stdio.h` library.\n\n## References\n\n- [OWASP C++ Secure Coding Practices](https://cheatsheetseries.owasp.org/cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.html)\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)"
-              },
-              "properties": {
-                "tags": [
-                  "DS154189"
-                ]
-              }
-            },
-            {
-              "id": "cc508e23-3245-350a-9eaa-19ea6322c480",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability refers to the use of insecure C library functions in C++ code. These functions are often prone to buffer overflow attacks, format string vulnerabilities, or other types of security issues. In the provided code snippet, the `fopen` function is used, which can lead to vulnerabilities if the file name or mode string is not properly validated or controlled.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use safer alternatives to these functions, or to perform proper input validation and error checking. In the case of `fopen`, consider using a safer alternative such as `fopen_s` (in Microsoft's C library), or use C++ file I/O operations instead.\n\n## Source Code Fix Recommendation\n\nHere is a safer version of the code using C++ file I/O operations:\n\n```cpp\n#include <fstream>\n\nstd::ofstream fx(\"x.dat\");\nif (!fx) {\n    // Handle error\n}\n```\n\n## Library Dependencies\n\nThe original code requires the `stdio.h` or `cstdio` library for `fopen`. The fixed code requires the `fstream` library.\n\n## References\n\n- [OWASP C++](https://owasp.org/www-pdf-archive/OWASP_SCP_v2.pdf)\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)\n\nPlease note that the links provided are accessible to anonymous users at the time of writing this report."
+                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability in C++ refers to the use of certain C standard library functions that are known to be dangerous due to their potential to cause buffer overflows, format string vulnerabilities, or other problems. These functions are often prohibited in secure coding standards. In this case, the function `localtime()` is used, which is not thread-safe and can lead to data races if used in a multi-threaded context.\n\n## Mitigation Advice\n\nAvoid using non-thread-safe functions like `localtime()`. Instead, use thread-safe alternatives such as `localtime_r()`. Always consider thread safety when writing code that may be used in a multi-threaded context.\n\n## Source Code Fix Recommendation\n\nReplace the `localtime()` function with the `localtime_r()` function. Here is an example of how to do it:\n\n```cpp\n#include <ctime>\n\ntime_t rawtime;\nstruct tm timeinfo;\n\ntime(&rawtime);\nlocaltime_r(&rawtime, &timeinfo);\n```\n\n## Library Dependencies\n\nThe code example requires the `<ctime>` library.\n\n## References\n\n- [OWASP C++ Secure Coding Practices](https://cheatsheetseries.owasp.org/cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.html)\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)"
               },
               "properties": {
                 "tags": [
@@ -232,14 +122,98 @@
               }
             },
             {
-              "id": "e4d688ca-7c8e-3741-bbcd-9e5ca17d62a2",
+              "id": "4fac3d3c-8b61-388a-bb5d-61c22cc38d94",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability refers to the use of insecure C library functions in C++ code that can lead to various security issues such as buffer overflows, format string vulnerabilities, or integer overflows. In this case, the `fopen` function is used, which can lead to vulnerabilities if the file name or path is manipulated by an attacker.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use safer alternatives to these functions. In the case of `fopen`, consider using `fopen_s` which is a safer version of `fopen`. It's also important to validate and sanitize all inputs, especially those that can affect file paths or names.\n\n## Source Code Fix Recommendation\n\nReplace the `fopen` function with `fopen_s`:\n\n```cpp\nFILE* fA;\nerrno_t err = fopen_s(&fA, \"A.dat\", \"w\");\nif (err != 0) {\n    // Handle error\n}\n```\n\n## Library Dependencies\n\nThe code example requires the `stdio.h` library.\n\n## References\n\n- [OWASP C++](https://owasp.org/www-pdf-archive/OWASP_SCP_v2.pdf)\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)"
+                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability in C++ refers to the use of certain C standard library functions that are known to be dangerous due to their potential to cause buffer overflows, format string vulnerabilities, or other problems. These functions are often prohibited in secure coding standards. In this case, the function `localtime()` is used, which is not thread-safe and can lead to data races if used in a multi-threaded context.\n\n## Mitigation Advice\n\nAvoid using non-thread-safe functions like `localtime()`. Instead, use thread-safe alternatives such as `localtime_r()`. Always consider thread safety when writing code that may be used in a multi-threaded context.\n\n## Source Code Fix Recommendation\n\nReplace the `localtime()` function with the `localtime_r()` function. Here is an example of how to do it:\n\n```cpp\n#include <ctime>\n\ntime_t rawtime;\nstruct tm timeinfo;\n\ntime(&rawtime);\nlocaltime_r(&rawtime, &timeinfo);\n```\n\n## Library Dependencies\n\nThe code example requires the `<ctime>` library.\n\n## References\n\n- [OWASP C++ Secure Coding Practices](https://cheatsheetseries.owasp.org/cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.html)\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)"
               },
               "properties": {
                 "tags": [
                   "DS154189"
+                ]
+              }
+            },
+            {
+              "id": "ed74502b-fdbb-3862-ba23-19278cf8eeae",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability in C++ refers to the use of insecure C library functions that can lead to various security issues such as buffer overflows, format string vulnerabilities, or integer overflows. In this case, the `fopen` function is used, which can lead to vulnerabilities if the file name or path is manipulated by an attacker.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use safer alternatives to these functions. For instance, instead of `fopen`, you can use `fopen_s` which is a safer version of `fopen`. It's also important to validate and sanitize all inputs, especially those that can affect file paths or names.\n\n## Source Code Fix Recommendation\n\nReplace the `fopen` function with `fopen_s`:\n\n```cpp\nFILE* fp = NULL;\nerrno_t err = fopen_s(&fp, \"x.dat\", \"w\");\nif (err != 0) {\n    // Handle error\n}\n```\n\n## Library Dependencies\n\nThe code example requires the `stdio.h` library.\n\n## References\n\n- [OWASP C++](https://owasp.org/www-pdf-archive/OWASP_SCP_v2.pdf)\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS154189"
+                ]
+              }
+            },
+            {
+              "id": "3136b7b6-a4a9-3e43-81d5-b3f2b2fbca28",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability refers to the use of insecure C library functions in C++ code. These functions are considered insecure because they do not perform bounds checking or other necessary validation, which can lead to buffer overflow attacks, format string vulnerabilities, or integer overflows. In this case, the function `atoi()` is used, which can lead to integer overflow if the input string represents a number larger than `INT_MAX`.\n\n## Mitigation Advice\n\nAvoid using insecure C library functions. Instead, use safer alternatives that perform necessary validation. For `atoi()`, a safer alternative is `strtol()`, which allows error checking.\n\n## Source Code Fix Recommendation\n\nReplace `atoi(argv[i + 1])` with the following code:\n\n```cpp\n#include <cstdlib>\n#include <climits>\n\nchar *p;\nlong converted = strtol(argv[i + 1], &p, 10);\nif (*p != '\\0' || converted > INT_MAX) {\n    // handle error\n}\n```\n\n## Library Dependencies\n\nThe code example requires the following library dependencies:\n\n- cstdlib\n- climits\n\n## OWASP Resources\n\n\n## Common Weakness Enumeration (CWE)\n\n- [CWE-242: Use of Inherently Dangerous Function](https://cwe.mitre.org/data/definitions/242.html)\n- [CWE-190: Integer Overflow or Wraparound](https://cwe.mitre.org/data/definitions/190.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS154189"
+                ]
+              }
+            },
+            {
+              "id": "95000276-7163-3b59-85bb-c98580ef9ec7",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability refers to the use of insecure C library functions in C++ code. These functions are often prone to buffer overflow attacks, format string vulnerabilities, or other types of security issues. In this case, the `fopen` function is used, which can lead to potential security risks if the file name or mode is not properly validated or controlled.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use safer alternatives to these functions. In the case of `fopen`, consider using `fstream` objects from the C++ Standard Library, which provide a higher level of abstraction and are generally safer.\n\n## Source Code Fix Recommendation\n\nReplace the `fopen` function with the `ofstream` object from the C++ Standard Library:\n\n```cpp\n#include <fstream>\n\nstd::ofstream file(\"b.dat\");\nif (!file) {\n    // Handle error\n}\n```\n\n## Library Dependencies\n\nThe code example requires the following library:\n\n- `<fstream>`\n\n## References\n\n- [OWASP C++](https://owasp.org/www-pdf-archive/OWASP_SCP_v2.pdf)\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS154189"
+                ]
+              }
+            },
+            {
+              "id": "b883d927-ccaf-38d4-90f3-55b3971554a3",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability refers to the use of insecure C library functions in C++ code. These functions are often prone to buffer overflow attacks, format string vulnerabilities, or other types of security issues. In this case, the `fopen` function is used, which can lead to potential security risks if the file name or mode is not properly validated or controlled.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use safer alternatives to these functions. In the case of `fopen`, consider using `fstream` objects from the C++ Standard Library, which provide a higher level of abstraction and are generally safer.\n\n## Source Code Fix Recommendation\n\nReplace the `fopen` function with the `ofstream` object from the C++ Standard Library:\n\n```cpp\n#include <fstream>\n\nstd::ofstream file(\"A.dat\");\nif (!file) {\n    // Handle error\n}\n```\n\n## Library Dependencies\n\nThe code example requires the following library:\n\n- `<fstream>`\n\n## References\n\n- [OWASP C++](https://owasp.org/www-pdf-archive/OWASP_SCP_v2.pdf)\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS154189"
+                ]
+              }
+            },
+            {
+              "id": "db60085c-a4ba-35b9-93b7-9ee0471b0fbd",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability in C++ refers to the use of insecure C library functions that can lead to various security issues such as buffer overflows, format string vulnerabilities, integer overflows, etc. In this case, the `fopen` function is used, which can lead to potential security risks if the file name or mode is controlled by an attacker.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use safer alternatives to these functions. For instance, instead of `fopen`, you can use `fopen_s` which is a safer version of `fopen`. It's also important to validate and sanitize all inputs, especially those that are used in file operations.\n\n## Source Code Fix Recommendation\n\nHere is a safer version of the code using `fopen_s`:\n\n```cpp\n#include <stdio.h>\n\nFILE* fp = NULL;\nerrno_t err = fopen_s(&fp, \"xexact.dat\", \"w\");\nif (err != 0) {\n    // Handle error\n}\n```\n\n## Library Dependencies\n\nThe code example requires the `stdio.h` library.\n\n## References\n\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS154189"
+                ]
+              }
+            },
+            {
+              "id": "fcf7049b-6eb8-3cd1-8d48-9ca219a91264",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\nUnsecured Web Link Vulnerability in C++ refers to the situation where a program allows a user to follow a link to an unsecured or untrusted website. This can lead to various security issues such as phishing attacks, malware downloads, and other forms of exploitation. In the provided code snippet, the program is directing the user to an unsecured HTTP link, which is a potential security risk.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use secure links (HTTPS) instead of unsecured ones (HTTP). HTTPS ensures that the data transferred between the user and the site is encrypted and cannot be intercepted. Additionally, validate all URLs to ensure they are safe before directing users to them.\n\n## Source Code Fix Recommendation\n\nReplace the unsecured HTTP link with a secured HTTPS link. If the website does not support HTTPS, consider finding an alternative that does. \n\n```cpp\ndoc.get(\"Final Summary\")->add(\"After confirmation please upload results from the YAML file contents to\",\"https://hpcg-benchmark.org\")\n```\n\n## Library Dependencies\n\nThe code snippet provided does not indicate any specific library dependencies. However, a typical C++ program that manipulates documents might require libraries such as:\n\n- A YAML parsing library, such as yaml-cpp\n- A document manipulation library, depending on the structure of `doc`\n\n## References\n\n- [OWASP Unvalidated Redirects and Forwards Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html)\n- [CWE-601: URL Redirection to Untrusted Site ('Open Redirect')](https://cwe.mitre.org/data/definitions/601.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS137138"
+                ]
+              }
+            },
+            {
+              "id": "d216615d-7640-3135-80e9-44789746015a",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\nThe \"Unsecured Web Address\" vulnerability refers to the use of unencrypted HTTP protocol for data transmission. In the provided C++ code snippet, the application is sending data to an HTTP URL. This data transmission is unsecured and can be intercepted by attackers, leading to potential data leakage or man-in-the-middle attacks.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, always use HTTPS protocol for data transmission. HTTPS encrypts the data between the client and the server, making it difficult for attackers to intercept and read the data.\n\n## Source Code Fix Recommendation\n\nHere is the fixed code snippet:\n\n```cpp\ndoc.get(\"Final Summary\")->add(\"Please upload results from the YAML file contents to\",\"https://hpcg-benchmark.org\")\n```\n\n## Library Dependencies\n\nThe code snippet seems to be using a document object `doc` to add data. The exact library dependencies cannot be determined without more context. However, it's likely that this code is using some form of JSON or XML library.\n\n## References\n\n- [CWE-319: Cleartext Transmission of Sensitive Information](https://cwe.mitre.org/data/definitions/319.html)"
+              },
+              "properties": {
+                "tags": [
+                  "DS137138"
                 ]
               }
             },
@@ -256,7 +230,7 @@
               }
             },
             {
-              "id": "b250aa0e-3518-36c3-b1ee-18227fbd22ad",
+              "id": "1203a5c5-72da-3adf-b05b-89ac324816b0",
               "help": {
                 "text": "",
                 "markdown": "## Description\n\n\"Detected Prohibited C Function\" is a vulnerability that arises when a C++ program uses certain C standard library functions that are known to be insecure. These functions are often referred to as \"banned\" functions. One such function is `sprintf`.\n\nThe `sprintf` function is used to write formatted data to a string. However, it does not check the size of the destination buffer, which can lead to buffer overflow if the source data exceeds the size of the destination buffer. This can cause crashes, data corruption, and potentially allow an attacker to execute arbitrary code.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, avoid using the `sprintf` function. Instead, use safer alternatives that check the size of the destination buffer, such as `snprintf`.\n\n## Source Code Fix Recommendation\n\nReplace `sprintf` with `snprintf`. Here is an example:\n\n```cpp\n// Vulnerable code\nchar buffer[50];\nsprintf(buffer, \"%s\", someString);\n\n// Fixed code\nchar buffer[50];\nsnprintf(buffer, sizeof(buffer), \"%s\", someString);\n```\n\nIn the fixed code, `snprintf` checks that it does not write more than `sizeof(buffer)` characters, including the null terminator, preventing buffer overflow.\n\n## Library Dependencies\n\nThe `sprintf` and `snprintf` functions are part of the C standard library, so no additional library dependencies are required.\n\n## References\n\n- [OWASP C++ Secure Coding Practices](https://cheatsheetseries.owasp.org/cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.html)\n- [CWE-120: Buffer Copy without Checking Size of Input ('Classic Buffer Overflow')](https://cwe.mitre.org/data/definitions/120.html)"
@@ -268,7 +242,7 @@
               }
             },
             {
-              "id": "1203a5c5-72da-3adf-b05b-89ac324816b0",
+              "id": "b250aa0e-3518-36c3-b1ee-18227fbd22ad",
               "help": {
                 "text": "",
                 "markdown": "## Description\n\n\"Detected Prohibited C Function\" is a vulnerability that arises when a C++ program uses certain C standard library functions that are known to be insecure. These functions are often referred to as \"banned\" functions. One such function is `sprintf`.\n\nThe `sprintf` function is used to write formatted data to a string. However, it does not check the size of the destination buffer, which can lead to buffer overflow if the source data exceeds the size of the destination buffer. This can cause crashes, data corruption, and potentially allow an attacker to execute arbitrary code.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, avoid using the `sprintf` function. Instead, use safer alternatives that check the size of the destination buffer, such as `snprintf`.\n\n## Source Code Fix Recommendation\n\nReplace `sprintf` with `snprintf`. Here is an example:\n\n```cpp\n// Vulnerable code\nchar buffer[50];\nsprintf(buffer, \"%s\", someString);\n\n// Fixed code\nchar buffer[50];\nsnprintf(buffer, sizeof(buffer), \"%s\", someString);\n```\n\nIn the fixed code, `snprintf` checks that it does not write more than `sizeof(buffer)` characters, including the null terminator, preventing buffer overflow.\n\n## Library Dependencies\n\nThe `sprintf` and `snprintf` functions are part of the C standard library, so no additional library dependencies are required.\n\n## References\n\n- [OWASP C++ Secure Coding Practices](https://cheatsheetseries.owasp.org/cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.html)\n- [CWE-120: Buffer Copy without Checking Size of Input ('Classic Buffer Overflow')](https://cwe.mitre.org/data/definitions/120.html)"
@@ -376,30 +350,6 @@
               }
             },
             {
-              "id": "fcf7049b-6eb8-3cd1-8d48-9ca219a91264",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nUnsecured Web Link Vulnerability in C++ refers to the situation where a program allows a user to follow a link to an unsecured or untrusted website. This can lead to various security issues such as phishing attacks, malware downloads, and other forms of exploitation. In the provided code snippet, the program is directing the user to an unsecured HTTP link, which is a potential security risk.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use secure links (HTTPS) instead of unsecured ones (HTTP). HTTPS ensures that the data transferred between the user and the site is encrypted and cannot be intercepted. Additionally, validate all URLs to ensure they are safe before directing users to them.\n\n## Source Code Fix Recommendation\n\nReplace the unsecured HTTP link with a secured HTTPS link. If the website does not support HTTPS, consider finding an alternative that does. \n\n```cpp\ndoc.get(\"Final Summary\")->add(\"After confirmation please upload results from the YAML file contents to\",\"https://hpcg-benchmark.org\")\n```\n\n## Library Dependencies\n\nThe code snippet provided does not indicate any specific library dependencies. However, a typical C++ program that manipulates documents might require libraries such as:\n\n- A YAML parsing library, such as yaml-cpp\n- A document manipulation library, depending on the structure of `doc`\n\n## References\n\n- [OWASP Unvalidated Redirects and Forwards Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html)\n- [CWE-601: URL Redirection to Untrusted Site ('Open Redirect')](https://cwe.mitre.org/data/definitions/601.html)"
-              },
-              "properties": {
-                "tags": [
-                  "DS137138"
-                ]
-              }
-            },
-            {
-              "id": "d216615d-7640-3135-80e9-44789746015a",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nThe \"Unsecured Web Address\" vulnerability refers to the use of unencrypted HTTP protocol for data transmission. In the provided C++ code snippet, the application is sending data to an HTTP URL. This data transmission is unsecured and can be intercepted by attackers, leading to potential data leakage or man-in-the-middle attacks.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, always use HTTPS protocol for data transmission. HTTPS encrypts the data between the client and the server, making it difficult for attackers to intercept and read the data.\n\n## Source Code Fix Recommendation\n\nHere is the fixed code snippet:\n\n```cpp\ndoc.get(\"Final Summary\")->add(\"Please upload results from the YAML file contents to\",\"https://hpcg-benchmark.org\")\n```\n\n## Library Dependencies\n\nThe code snippet seems to be using a document object `doc` to add data. The exact library dependencies cannot be determined without more context. However, it's likely that this code is using some form of JSON or XML library.\n\n## References\n\n- [CWE-319: Cleartext Transmission of Sensitive Information](https://cwe.mitre.org/data/definitions/319.html)"
-              },
-              "properties": {
-                "tags": [
-                  "DS137138"
-                ]
-              }
-            },
-            {
               "id": "471714e0-a1e3-3b6b-8b62-9014c4e033b4",
               "help": {
                 "text": "",
@@ -424,14 +374,15 @@
               }
             },
             {
-              "id": "f0e7961d-cc44-3545-9a43-e2d61c38ab87",
+              "id": "810bcc35-f953-3c30-9caa-f815f38355fe",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\nThe \"Prohibited C Function Identified\" vulnerability refers to the use of C functions that are considered unsafe due to their potential to cause buffer overflows, format string vulnerabilities, or other security issues. In this case, the function `localtime` is used, which is not thread-safe and can lead to data races if used in a multithreaded context.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use thread-safe alternatives to `localtime`, such as `localtime_r` in POSIX compliant systems. This function requires an additional parameter, a pointer to a `struct tm`, where the result is stored.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the code:\n\n```cpp\n#include <ctime>\n\n// ...\n\ntime_t rawtime;\nstruct tm timeinfo;\n\ntime(&rawtime);\nlocaltime_r(&rawtime, &timeinfo);\nptm = &timeinfo;\n```\n\n## Library Dependencies\n\nThe code example requires the following library to execute properly:\n\n- `<ctime>`\n\n## References\n\n- [OWASP C++ Secure Coding Practices](https://cheatsheetseries.owasp.org/cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.html)\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)"
+                "markdown": "## Description\n\nIn C++ programming, the vulnerability \"Avoid Using Non-Cryptographic or Weak Random Number Generators\" refers to the use of functions or methods that generate random numbers which are not suitable for security-critical operations. The `rand()` function, for example, is a weak random number generator because it is predictable and can be easily reproduced, making it unsuitable for generating secure random numbers.\n\nThe specific vulnerability sink in the provided code is the use of `rand()` function to generate random numbers:\n\n```cpp\nrng[i] = rand() / (double)(RAND_MAX) + 1.0\n```\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, use a strong cryptographic random number generator instead of `rand()`. In C++, you can use the `<random>` library which provides a variety of random number generators that are more secure and less predictable than `rand()`.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the vulnerability sink:\n\n```cpp\n#include <random>\n\nstd::random_device rd;\nstd::mt19937 gen(rd());\nstd::uniform_real_distribution<> dis(1.0, 2.0);\n\nrng[i] = dis(gen);\n```\n\nIn this code, `std::random_device` is a uniformly-distributed integer random number generator that produces non-deterministic random numbers. `std::mt19937` is a Mersenne Twister pseudo-random generator of 32-bit numbers with a state size of 19937 bits. `std::uniform_real_distribution` produces random floating-point numbers in the range [1.0, 2.0).\n\n## Library Dependencies\n\nThe code example requires the `<random>` library.\n\n## References\n\n- [CWE-338: Use of Cryptographically Weak PRNG](https://cwe.mitre.org/data/definitions/338.html)"
               },
               "properties": {
                 "tags": [
-                  "DS154189"
+                  "DS148264",
+                  "810bcc35-f953-3c30-9caa-f815f38355fe"
                 ]
               }
             },
@@ -449,19 +400,6 @@
               }
             },
             {
-              "id": "810bcc35-f953-3c30-9caa-f815f38355fe",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nIn C++ programming, the vulnerability \"Avoid Using Non-Cryptographic or Weak Random Number Generators\" refers to the use of functions or methods that generate random numbers which are not suitable for security-critical operations. The `rand()` function, for example, is a weak random number generator because it is predictable and can be easily reproduced, making it unsuitable for generating secure random numbers.\n\nThe specific vulnerability sink in the provided code is the use of `rand()` function to generate random numbers:\n\n```cpp\nrng[i] = rand() / (double)(RAND_MAX) + 1.0\n```\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, use a strong cryptographic random number generator instead of `rand()`. In C++, you can use the `<random>` library which provides a variety of random number generators that are more secure and less predictable than `rand()`.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the vulnerability sink:\n\n```cpp\n#include <random>\n\nstd::random_device rd;\nstd::mt19937 gen(rd());\nstd::uniform_real_distribution<> dis(1.0, 2.0);\n\nrng[i] = dis(gen);\n```\n\nIn this code, `std::random_device` is a uniformly-distributed integer random number generator that produces non-deterministic random numbers. `std::mt19937` is a Mersenne Twister pseudo-random generator of 32-bit numbers with a state size of 19937 bits. `std::uniform_real_distribution` produces random floating-point numbers in the range [1.0, 2.0).\n\n## Library Dependencies\n\nThe code example requires the `<random>` library.\n\n## References\n\n- [CWE-338: Use of Cryptographically Weak PRNG](https://cwe.mitre.org/data/definitions/338.html)"
-              },
-              "properties": {
-                "tags": [
-                  "DS148264",
-                  "810bcc35-f953-3c30-9caa-f815f38355fe"
-                ]
-              }
-            },
-            {
               "id": "c3192606-4e8b-31b1-bb21-4b9d3630dae2",
               "help": {
                 "text": "",
@@ -470,19 +408,6 @@
               "properties": {
                 "tags": [
                   "DS161085"
-                ]
-              }
-            },
-            {
-              "id": "d03b77d8-b339-3287-b98c-e06190b1de79",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nIn C++ programming, \"Avoid Using Weak or Non-Cryptographic Random Number Generators\" vulnerability refers to the use of weak or non-cryptographic random number generators that can lead to predictable or easily guessable values. This can be exploited by attackers to predict the sequence of random numbers and compromise the security of the system.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use strong cryptographic random number generators. In C++, you can use the `<random>` library which provides a variety of random number generators that are suitable for cryptographic use.\n\n## Source Code Fix Recommendation\n\nHere is a simple example of how to use the `<random>` library to generate a strong random number:\n\n```cpp\n#include <random>\n\nint main() {\n    std::random_device rd;  // Will be used to obtain a seed for the random number engine\n    std::mt19937 gen(rd()); // Standard mersenne_twister_engine seeded with rd()\n    std::uniform_int_distribution<> distrib(1, 6);\n\n    int i = distrib(gen); // Generate a random number\n}\n```\n\nIn this code, `std::random_device` is a uniformly-distributed integer random number generator that produces non-deterministic random numbers. `std::mt19937` is a Mersenne Twister pseudo-random generator of 32-bit numbers with a state size of 19937 bits. `std::uniform_int_distribution` produces random integers in a range [a, b].\n\n## Library Dependencies\n\nThe above code example requires the `<random>` library.\n\n## References\n\n- [CWE-338: Use of Cryptographically Weak PRNG](https://cwe.mitre.org/data/definitions/338.html)"
-              },
-              "properties": {
-                "tags": [
-                  "DS148264",
-                  "d03b77d8-b339-3287-b98c-e06190b1de79"
                 ]
               }
             },
@@ -500,106 +425,23 @@
               }
             },
             {
-              "id": "a898c326-1e33-3be4-bf4c-fbe145226317",
+              "id": "d03b77d8-b339-3287-b98c-e06190b1de79",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability in C++ refers to the use of insecure C library functions that can lead to various security issues such as buffer overflows, format string vulnerabilities, integer overflows, etc. These functions are considered insecure because they do not perform bounds checking and other necessary validations, making the program susceptible to attacks.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use safer alternatives to these insecure functions. For instance, instead of using `strcpy()`, use `strncpy()`, and instead of `sprintf()`, use `snprintf()`. These functions include bounds checking to prevent buffer overflow vulnerabilities. \n\nAlso, consider using libraries that provide more secure functions. For example, the C++ Standard Library and Boost Libraries provide many functions that are safer than their C counterparts.\n\n## Source Code Fix Recommendation\n\nIf the code example is:\n\n```cpp\nchar rank[10];\nstrcpy(rank, \"1234567890\");\n```\n\nA safer alternative would be:\n\n```cpp\nchar rank[10];\nstrncpy(rank, \"1234567890\", sizeof(rank) - 1);\n```\n\nIn this example, `strncpy()` is used instead of `strcpy()`. The `sizeof(rank) - 1` ensures that the copied string will not exceed the size of the buffer.\n\n## Library Dependencies\n\nThe code example does not require any additional library dependencies to execute properly.\n\n## References\n\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)\n\nPlease note that the links provided are accessible to anonymous users at the time of writing this report."
+                "markdown": "## Description\n\nIn C++ programming, \"Avoid Using Weak or Non-Cryptographic Random Number Generators\" vulnerability refers to the use of weak or non-cryptographic random number generators that can lead to predictable or easily guessable values. This can be exploited by attackers to predict the sequence of random numbers and compromise the security of the system.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use strong cryptographic random number generators. In C++, you can use the `<random>` library which provides a variety of random number generators that are suitable for cryptographic use.\n\n## Source Code Fix Recommendation\n\nHere is a simple example of how to use the `<random>` library to generate a strong random number:\n\n```cpp\n#include <random>\n\nint main() {\n    std::random_device rd;  // Will be used to obtain a seed for the random number engine\n    std::mt19937 gen(rd()); // Standard mersenne_twister_engine seeded with rd()\n    std::uniform_int_distribution<> distrib(1, 6);\n\n    int i = distrib(gen); // Generate a random number\n}\n```\n\nIn this code, `std::random_device` is a uniformly-distributed integer random number generator that produces non-deterministic random numbers. `std::mt19937` is a Mersenne Twister pseudo-random generator of 32-bit numbers with a state size of 19937 bits. `std::uniform_int_distribution` produces random integers in a range [a, b].\n\n## Library Dependencies\n\nThe above code example requires the `<random>` library.\n\n## References\n\n- [CWE-338: Use of Cryptographically Weak PRNG](https://cwe.mitre.org/data/definitions/338.html)"
               },
               "properties": {
                 "tags": [
-                  "DS154189"
+                  "DS148264",
+                  "d03b77d8-b339-3287-b98c-e06190b1de79"
                 ]
               }
             },
             {
-              "id": "ddd853bf-c998-3448-b46e-02b8d7e94769",
+              "id": "7a52b314-ec76-3e82-8173-8a494a15c92c",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability in C++ refers to the use of certain C standard library functions that are known to be dangerous due to their potential to cause buffer overflows, format string vulnerabilities, or other issues. These functions are often prohibited in secure coding standards. The use of these functions can lead to serious security vulnerabilities including code execution, denial of service, or information disclosure.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use safer alternatives to these functions. For example, instead of using `strcpy()`, use `strncpy()`, and instead of `sprintf()`, use `snprintf()`. Always ensure that you are not writing more data to a buffer than it can hold. \n\n## Source Code Fix Recommendation\n\nWithout the full context of the code, it's hard to provide a specific fix. However, if the prohibited function is being used to manipulate or compare the `rank` variable, consider using safer alternatives. For example, if `strcpy()` is being used, it could be replaced with `strncpy()` as follows:\n\n```cpp\nchar dest[50];\nchar src[50];\nstrncpy(dest, src, sizeof(dest) - 1);\ndest[sizeof(dest) - 1] = '\\0';\n```\n\n## Library Dependencies\n\nThe specific library dependencies would depend on the rest of the code and the specific prohibited function being used. However, most C standard library functions are included in `<cstring>` or `<cstdio>`.\n\n## References\n\n- [OWASP C++](https://owasp.org/www-pdf-archive/OWASP_SCP_v2.pdf)\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)\n\nPlease note that the links provided are active and accessible to anonymous users at the time of writing this report."
-              },
-              "properties": {
-                "tags": [
-                  "DS154189"
-                ]
-              }
-            },
-            {
-              "id": "dba2d371-d54d-36af-a5a9-6f76f100a7e8",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability in C++ refers to the use of certain C standard library functions that are known to be dangerous due to their potential to cause buffer overflows, format string vulnerabilities, or other issues. These functions are often prohibited in secure coding standards. The use of these functions can lead to serious security vulnerabilities including code execution, denial of service, or information disclosure.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use safer alternatives to these functions. For example, instead of using `strcpy()`, use `strncpy()`, and instead of `sprintf()`, use `snprintf()`. Always ensure that you are not writing more data to a buffer than it can hold. \n\n## Source Code Fix Recommendation\n\nWithout the full context of the code, it's hard to provide a specific fix. However, if the prohibited function is being used to manipulate or compare the `rank` variable, consider using safer alternatives. For example, if `strcpy()` is being used, it could be replaced with `strncpy()` as follows:\n\n```cpp\nchar dest[50];\nchar src[50];\nstrncpy(dest, src, sizeof(dest) - 1);\ndest[sizeof(dest) - 1] = '\\0';\n```\n\n## Library Dependencies\n\nThe specific library dependencies would depend on the rest of the code and the specific prohibited function being used. However, most C standard library functions are included in `<cstring>` or `<cstdio>`.\n\n## References\n\n- [OWASP C++](https://owasp.org/www-pdf-archive/OWASP_SCP_v2.pdf)\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)\n\nPlease note that the links provided are active and accessible to anonymous users at the time of writing this report."
-              },
-              "properties": {
-                "tags": [
-                  "DS154189"
-                ]
-              }
-            },
-            {
-              "id": "e03f8fa2-fa3a-3cd4-86c0-78d409d9d2ec",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability in C++ refers to the use of certain C standard library functions that are known to be dangerous due to their potential to cause buffer overflows, format string vulnerabilities, or other issues. These functions are often prohibited in secure coding standards. The use of these functions can lead to serious security vulnerabilities including code execution, denial of service, or information disclosure.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use safer alternatives to these functions. For example, instead of using `strcpy()`, use `strncpy()`, and instead of `sprintf()`, use `snprintf()`. Always ensure that you are not writing more data to a buffer than it can hold. \n\n## Source Code Fix Recommendation\n\nWithout the full context of the code, it's hard to provide a specific fix. However, if the prohibited function is being used to manipulate or compare the `rank` variable, consider using safer alternatives. For example, if `strcpy()` is being used, it could be replaced with `strncpy()` as follows:\n\n```cpp\nchar dest[50];\nchar src[50];\nstrncpy(dest, src, sizeof(dest) - 1);\ndest[sizeof(dest) - 1] = '\\0';\n```\n\n## Library Dependencies\n\nThe specific library dependencies would depend on the rest of the code and the specific prohibited function being used. However, most C standard library functions are included in `<cstring>` or `<cstdio>`.\n\n## References\n\n- [OWASP C++](https://owasp.org/www-pdf-archive/OWASP_SCP_v2.pdf)\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)\n\nPlease note that the links provided are active and accessible to anonymous users at the time of writing this report."
-              },
-              "properties": {
-                "tags": [
-                  "DS154189"
-                ]
-              }
-            },
-            {
-              "id": "a54baa56-914a-39cd-9174-4d3f2fb0406e",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability in C++ refers to the use of certain C standard library functions that are known to be dangerous due to their potential to cause buffer overflows, format string vulnerabilities, or other issues. These functions are often prohibited in secure coding standards. The use of these functions can lead to serious security vulnerabilities including code execution, denial of service, or information disclosure.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use safer alternatives to these functions. For example, instead of using `strcpy()`, use `strncpy()`, and instead of `sprintf()`, use `snprintf()`. Always ensure that you are not writing more data to a buffer than it can hold. \n\n## Source Code Fix Recommendation\n\nWithout the full context of the code, it's hard to provide a specific fix. However, if the prohibited function is being used to manipulate or compare the `rank` variable, consider using safer alternatives. For example, if `strcpy()` is being used, it could be replaced with `strncpy()` as follows:\n\n```cpp\nchar dest[50];\nchar src[50];\nstrncpy(dest, src, sizeof(dest) - 1);\ndest[sizeof(dest) - 1] = '\\0';\n```\n\n## Library Dependencies\n\nThe specific library dependencies would depend on the rest of the code and the specific prohibited function being used. However, most C standard library functions are included in `<cstring>` or `<cstdio>`.\n\n## References\n\n- [OWASP C++](https://owasp.org/www-pdf-archive/OWASP_SCP_v2.pdf)\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)\n\nPlease note that the links provided are active and accessible to anonymous users at the time of writing this report."
-              },
-              "properties": {
-                "tags": [
-                  "DS154189"
-                ]
-              }
-            },
-            {
-              "id": "1dc19bec-e483-3183-8cee-54fbefc30562",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability in C++ refers to the use of certain C standard library functions that are known to be dangerous due to their potential to cause buffer overflows, format string vulnerabilities, or other issues. These functions are often prohibited in secure coding standards. The use of these functions can lead to serious security vulnerabilities including code execution, denial of service, or information disclosure.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use safer alternatives to these functions. For example, instead of using `strcpy()`, use `strncpy()`, and instead of `sprintf()`, use `snprintf()`. Always ensure that you are not writing more data to a buffer than it can hold. \n\n## Source Code Fix Recommendation\n\nWithout the full context of the code, it's hard to provide a specific fix. However, if the prohibited function is being used to manipulate or compare the `rank` variable, consider using safer alternatives. For example, if `strcpy()` is being used, it could be replaced with `strncpy()` as follows:\n\n```cpp\nchar dest[50];\nchar src[50];\nstrncpy(dest, src, sizeof(dest) - 1);\ndest[sizeof(dest) - 1] = '\\0';\n```\n\n## Library Dependencies\n\nThe specific library dependencies would depend on the rest of the code and the specific prohibited function being used. However, most C standard library functions are included in `<cstring>` or `<cstdio>`.\n\n## References\n\n- [OWASP C++](https://owasp.org/www-pdf-archive/OWASP_SCP_v2.pdf)\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)\n\nPlease note that the links provided are active and accessible to anonymous users at the time of writing this report."
-              },
-              "properties": {
-                "tags": [
-                  "DS154189"
-                ]
-              }
-            },
-            {
-              "id": "36d8fd5d-4eda-32f4-acba-58f1bc217d12",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability in C++ refers to the use of certain C standard library functions that are known to be dangerous due to their potential to cause buffer overflows, format string vulnerabilities, or other issues. These functions are often prohibited in secure coding standards. The use of these functions can lead to serious security vulnerabilities including code execution, denial of service, or information disclosure.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use safer alternatives to these functions. For example, instead of using `strcpy()`, use `strncpy()`, and instead of `sprintf()`, use `snprintf()`. Always ensure that you are not writing more data to a buffer than it can hold. \n\n## Source Code Fix Recommendation\n\nWithout the full context of the code, it's hard to provide a specific fix. However, if the prohibited function is being used to manipulate or compare the `rank` variable, consider using safer alternatives. For example, if `strcpy()` is being used, it could be replaced with `strncpy()` as follows:\n\n```cpp\nchar dest[50];\nchar src[50];\nstrncpy(dest, src, sizeof(dest) - 1);\ndest[sizeof(dest) - 1] = '\\0';\n```\n\n## Library Dependencies\n\nThe specific library dependencies would depend on the rest of the code and the specific prohibited function being used. However, most C standard library functions are included in `<cstring>` or `<cstdio>`.\n\n## References\n\n- [OWASP C++](https://owasp.org/www-pdf-archive/OWASP_SCP_v2.pdf)\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)\n\nPlease note that the links provided are active and accessible to anonymous users at the time of writing this report."
-              },
-              "properties": {
-                "tags": [
-                  "DS154189"
-                ]
-              }
-            },
-            {
-              "id": "31c7332d-3731-3ab0-8a50-5c6b0e1af04e",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability in C++ refers to the use of certain C standard library functions that are known to be dangerous due to their potential to cause buffer overflows, format string vulnerabilities, or other issues. These functions are often prohibited in secure coding standards. The use of these functions can lead to serious security vulnerabilities including code execution, denial of service, or information disclosure.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use safer alternatives to these functions. For example, instead of using `strcpy()`, use `strncpy()`, and instead of `sprintf()`, use `snprintf()`. Always ensure that you are not writing more data to a buffer than it can hold. \n\n## Source Code Fix Recommendation\n\nWithout the full context of the code, it's hard to provide a specific fix. However, if the prohibited function is being used to manipulate or compare the `rank` variable, consider using safer alternatives. For example, if `strcpy()` is being used, it could be replaced with `strncpy()` as follows:\n\n```cpp\nchar dest[50];\nchar src[50];\nstrncpy(dest, src, sizeof(dest) - 1);\ndest[sizeof(dest) - 1] = '\\0';\n```\n\n## Library Dependencies\n\nThe specific library dependencies would depend on the rest of the code and the specific prohibited function being used. However, most C standard library functions are included in `<cstring>` or `<cstdio>`.\n\n## References\n\n- [OWASP C++](https://owasp.org/www-pdf-archive/OWASP_SCP_v2.pdf)\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)\n\nPlease note that the links provided are active and accessible to anonymous users at the time of writing this report."
-              },
-              "properties": {
-                "tags": [
-                  "DS154189"
-                ]
-              }
-            },
-            {
-              "id": "274f8a8f-1db1-3048-bdb3-e627ce2e5161",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability refers to the use of insecure C library functions that can lead to various security issues such as buffer overflows, format string vulnerabilities, integer overflows, etc. In this case, the function `atoi()` is used, which can lead to integer overflow or underflow if the input is not properly validated or sanitized.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use safer alternatives to these functions that perform bounds checking or input validation. For instance, instead of `atoi()`, you can use `strtol()` or `sscanf()`, which provide error checking.\n\n## Source Code Fix Recommendation\n\nReplace the `atoi()` function with `strtol()` or `sscanf()`. Here is an example of how to do it with `strtol()`:\n\n```cpp\n#include <cstdlib>\n#include <cerrno>\n\nchar *end;\nlong int device_id = strtol(argv[i + 1], &end, 10);\n\nif (end == argv[i + 1] || *end != '\\0' || errno == ERANGE) {\n    // handle conversion error\n}\n```\n\n## Library Dependencies\n\nThe code example requires the following library dependencies:\n\n- `<cstdlib>`: for `strtol()`\n- `<cerrno>`: for `errno`\n\n## References\n\n- [OWASP C++ Secure Coding Practices](https://cheatsheetseries.owasp.org/cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.html)\n- [CWE-242: Use of Inherently Dangerous Function](https://cwe.mitre.org/data/definitions/242.html)"
+                "markdown": "## Description\n\n\"Detected Prohibited C Function\" vulnerability refers to the use of insecure C library functions in C++ code. These functions are often prone to buffer overflow attacks, format string vulnerabilities, or other types of security issues. In this case, the `fopen` function is used, which can lead to vulnerabilities if the file path or mode is not properly validated or controlled.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use safer alternatives to these functions, or to implement proper error handling and input validation. In the case of `fopen`, it is important to ensure that the file path and mode are not influenced by user input or other untrusted data sources. \n\n## Source Code Fix Recommendation\n\nA safer alternative to `fopen` in C++ is to use the `fstream` library, which provides the `ifstream` class for reading from files:\n\n```cpp\n#include <fstream>\n\nstd::ifstream file(\"hpcg.dat\");\nif (!file) {\n    // Handle error\n}\n```\n\n## Library Dependencies\n\nThe code example requires the following library:\n\n- `cstdio` (for `fopen`)\n\nThe fixed code requires the following library:\n\n- `fstream` (for `ifstream`)\n\n## References\n\n- [OWASP C++ Secure Coding Practices](https://cheatsheetseries.owasp.org/cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.html)\n- [CWE-676: Use of Potentially Dangerous Function](https://cwe.mitre.org/data/definitions/676.html)"
               },
               "properties": {
                 "tags": [
@@ -619,30 +461,30 @@
       "language": "en-US",
       "results": [
         {
-          "ruleId": "7986b1a9-6214-38ec-9ae5-bd0c7e6badfd",
+          "ruleId": "a268c044-5c2f-3068-8daf-620ad9a7cb54",
           "kind": "fail",
-          "level": "warning",
+          "level": "error",
           "message": {
-            "text": "\"Prohibited C Function Identified\""
+            "text": "Avoid Using Non-Cryptographic or Weak Random Number Generators"
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/init.cpp"
+                  "uri": "src/MultiColoring.cpp"
                 },
                 "region": {
-                  "startLine": 244,
-                  "startColumn": 8,
-                  "endLine": 244,
-                  "endColumn": 17,
-                  "charOffset": 7731,
-                  "charLength": 9,
+                  "startLine": 284,
+                  "startColumn": 39,
+                  "endLine": 284,
+                  "endColumn": 44,
+                  "charOffset": 9628,
+                  "charLength": 5,
                   "snippet": {
-                    "text": "localtime",
+                    "text": "rand(",
                     "rendered": {
-                      "text": "localtime",
-                      "markdown": "`localtime`"
+                      "text": "rand(",
+                      "markdown": "`rand(`"
                     }
                   },
                   "sourceLanguage": "cpp"
@@ -651,50 +493,10 @@
             }
           ],
           "properties": {
-            "DevSkimSeverity": "Moderate",
+            "DevSkimSeverity": "Important",
             "DevSkimConfidence": "High",
             "tags": [
-              "API.DangerousAPI.BannedFunction"
-            ]
-          }
-        },
-        {
-          "ruleId": "b6632b9c-7b16-3fc5-9e70-83aa9be79b2f",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "Detected Prohibited C Function"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutputFile.cpp"
-                },
-                "region": {
-                  "startLine": 115,
-                  "startColumn": 13,
-                  "endLine": 115,
-                  "endColumn": 22,
-                  "charOffset": 2644,
-                  "charLength": 9,
-                  "snippet": {
-                    "text": "localtime",
-                    "rendered": {
-                      "text": "localtime",
-                      "markdown": "`localtime`"
-                    }
-                  },
-                  "sourceLanguage": "cpp"
-                }
-              }
-            }
-          ],
-          "properties": {
-            "DevSkimSeverity": "Moderate",
-            "DevSkimConfidence": "High",
-            "tags": [
-              "API.DangerousAPI.BannedFunction"
+              "Cryptography.PRNG.Weak"
             ]
           }
         },
@@ -963,7 +765,7 @@
           }
         },
         {
-          "ruleId": "c246c119-09d6-3d4f-b028-f570df460096",
+          "ruleId": "f24b3180-f41c-35e3-b58f-43ea52f7ae11",
           "kind": "fail",
           "level": "warning",
           "message": {
@@ -973,260 +775,20 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/ReadHpcgDat.cpp"
+                  "uri": "src/init.cpp"
                 },
                 "region": {
-                  "startLine": 43,
-                  "startColumn": 22,
-                  "endLine": 43,
-                  "endColumn": 27,
-                  "charOffset": 969,
-                  "charLength": 5,
-                  "snippet": {
-                    "text": "fopen",
-                    "rendered": {
-                      "text": "fopen",
-                      "markdown": "`fopen`"
-                    }
-                  },
-                  "sourceLanguage": "cpp"
-                }
-              }
-            }
-          ],
-          "properties": {
-            "DevSkimSeverity": "Moderate",
-            "DevSkimConfidence": "High",
-            "tags": [
-              "API.DangerousAPI.BannedFunction"
-            ]
-          }
-        },
-        {
-          "ruleId": "5c6f14f3-bdde-32d2-9e4e-827f0b4ffa08",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "Detected Prohibited C Function"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/CG.cpp"
-                },
-                "region": {
-                  "startLine": 182,
-                  "startColumn": 37,
-                  "endLine": 182,
-                  "endColumn": 43,
-                  "charOffset": 7911,
-                  "charLength": 6,
-                  "snippet": {
-                    "text": "printf",
-                    "rendered": {
-                      "text": "printf",
-                      "markdown": "`printf`"
-                    }
-                  },
-                  "sourceLanguage": "cpp"
-                }
-              }
-            }
-          ],
-          "properties": {
-            "DevSkimSeverity": "Moderate",
-            "DevSkimConfidence": "High",
-            "tags": [
-              "API.DangerousAPI.BannedFunction"
-            ]
-          }
-        },
-        {
-          "ruleId": "06d9bab5-878e-3baf-b88d-abe618324fe4",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "Detected Prohibited C Function"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/CG.cpp"
-                },
-                "region": {
-                  "startLine": 141,
-                  "startColumn": 35,
-                  "endLine": 141,
-                  "endColumn": 41,
-                  "charOffset": 6008,
-                  "charLength": 6,
-                  "snippet": {
-                    "text": "printf",
-                    "rendered": {
-                      "text": "printf",
-                      "markdown": "`printf`"
-                    }
-                  },
-                  "sourceLanguage": "cpp"
-                }
-              }
-            }
-          ],
-          "properties": {
-            "DevSkimSeverity": "Moderate",
-            "DevSkimConfidence": "High",
-            "tags": [
-              "API.DangerousAPI.BannedFunction"
-            ]
-          }
-        },
-        {
-          "ruleId": "f582af8f-84fd-350b-a932-e594a442a9ea",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "Detected Prohibited C Function"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/CG_ref.cpp"
-                },
-                "region": {
-                  "startLine": 159,
-                  "startColumn": 37,
-                  "endLine": 159,
-                  "endColumn": 43,
-                  "charOffset": 6603,
-                  "charLength": 6,
-                  "snippet": {
-                    "text": "printf",
-                    "rendered": {
-                      "text": "printf",
-                      "markdown": "`printf`"
-                    }
-                  },
-                  "sourceLanguage": "cpp"
-                }
-              }
-            }
-          ],
-          "properties": {
-            "DevSkimSeverity": "Moderate",
-            "DevSkimConfidence": "High",
-            "tags": [
-              "API.DangerousAPI.BannedFunction"
-            ]
-          }
-        },
-        {
-          "ruleId": "d8ee336f-ed65-3736-b8ec-56efaefc3d0a",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "Detected Prohibited C Function"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/CG_ref.cpp"
-                },
-                "region": {
-                  "startLine": 123,
-                  "startColumn": 35,
-                  "endLine": 123,
-                  "endColumn": 41,
-                  "charOffset": 5126,
-                  "charLength": 6,
-                  "snippet": {
-                    "text": "printf",
-                    "rendered": {
-                      "text": "printf",
-                      "markdown": "`printf`"
-                    }
-                  },
-                  "sourceLanguage": "cpp"
-                }
-              }
-            }
-          ],
-          "properties": {
-            "DevSkimSeverity": "Moderate",
-            "DevSkimConfidence": "High",
-            "tags": [
-              "API.DangerousAPI.BannedFunction"
-            ]
-          }
-        },
-        {
-          "ruleId": "31fda8ef-76b3-3c6b-821d-75864e0f498d",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "Detected Prohibited C Function"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/WriteProblem.cpp"
-                },
-                "region": {
-                  "startLine": 62,
-                  "startColumn": 7,
-                  "endLine": 62,
-                  "endColumn": 12,
-                  "charOffset": 1630,
-                  "charLength": 5,
-                  "snippet": {
-                    "text": "fopen",
-                    "rendered": {
-                      "text": "fopen",
-                      "markdown": "`fopen`"
-                    }
-                  },
-                  "sourceLanguage": "cpp"
-                }
-              }
-            }
-          ],
-          "properties": {
-            "DevSkimSeverity": "Moderate",
-            "DevSkimConfidence": "High",
-            "tags": [
-              "API.DangerousAPI.BannedFunction"
-            ]
-          }
-        },
-        {
-          "ruleId": "60ed7733-d81a-3bbf-9c70-9acc6d103e58",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "\"Prohibited C Function Identified\""
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/WriteProblem.cpp"
-                },
-                "region": {
-                  "startLine": 61,
-                  "startColumn": 12,
-                  "endLine": 61,
+                  "startLine": 244,
+                  "startColumn": 8,
+                  "endLine": 244,
                   "endColumn": 17,
-                  "charOffset": 1597,
-                  "charLength": 5,
+                  "charOffset": 7731,
+                  "charLength": 9,
                   "snippet": {
-                    "text": "fopen",
+                    "text": "localtime",
                     "rendered": {
-                      "text": "fopen",
-                      "markdown": "`fopen`"
+                      "text": "localtime",
+                      "markdown": "`localtime`"
                     }
                   },
                   "sourceLanguage": "cpp"
@@ -1243,7 +805,7 @@
           }
         },
         {
-          "ruleId": "cc508e23-3245-350a-9eaa-19ea6322c480",
+          "ruleId": "72ea9aa4-b789-3dbd-a704-f4d50086a615",
           "kind": "fail",
           "level": "warning",
           "message": {
@@ -1253,20 +815,20 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/WriteProblem.cpp"
+                  "uri": "src/OutputFile.cpp"
                 },
                 "region": {
-                  "startLine": 60,
-                  "startColumn": 7,
-                  "endLine": 60,
-                  "endColumn": 12,
-                  "charOffset": 1564,
-                  "charLength": 5,
+                  "startLine": 115,
+                  "startColumn": 13,
+                  "endLine": 115,
+                  "endColumn": 22,
+                  "charOffset": 2644,
+                  "charLength": 9,
                   "snippet": {
-                    "text": "fopen",
+                    "text": "localtime",
                     "rendered": {
-                      "text": "fopen",
-                      "markdown": "`fopen`"
+                      "text": "localtime",
+                      "markdown": "`localtime`"
                     }
                   },
                   "sourceLanguage": "cpp"
@@ -1323,7 +885,167 @@
           }
         },
         {
-          "ruleId": "e4d688ca-7c8e-3741-bbcd-9e5ca17d62a2",
+          "ruleId": "4fac3d3c-8b61-388a-bb5d-61c22cc38d94",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "Detected Prohibited C Function"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/YAML_Doc.cpp"
+                },
+                "region": {
+                  "startLine": 59,
+                  "startColumn": 8,
+                  "endLine": 59,
+                  "endColumn": 17,
+                  "charOffset": 1633,
+                  "charLength": 9,
+                  "snippet": {
+                    "text": "localtime",
+                    "rendered": {
+                      "text": "localtime",
+                      "markdown": "`localtime`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "Moderate",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "API.DangerousAPI.BannedFunction"
+            ]
+          }
+        },
+        {
+          "ruleId": "ed74502b-fdbb-3862-ba23-19278cf8eeae",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "Detected Prohibited C Function"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WriteProblem.cpp"
+                },
+                "region": {
+                  "startLine": 60,
+                  "startColumn": 7,
+                  "endLine": 60,
+                  "endColumn": 12,
+                  "charOffset": 1564,
+                  "charLength": 5,
+                  "snippet": {
+                    "text": "fopen",
+                    "rendered": {
+                      "text": "fopen",
+                      "markdown": "`fopen`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "Moderate",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "API.DangerousAPI.BannedFunction"
+            ]
+          }
+        },
+        {
+          "ruleId": "3136b7b6-a4a9-3e43-81d5-b3f2b2fbca28",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "Detected Prohibited C Function"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/rochpcg_gtest_main.cpp"
+                },
+                "region": {
+                  "startLine": 75,
+                  "startColumn": 24,
+                  "endLine": 75,
+                  "endColumn": 28,
+                  "charOffset": 2695,
+                  "charLength": 4,
+                  "snippet": {
+                    "text": "atoi",
+                    "rendered": {
+                      "text": "atoi",
+                      "markdown": "`atoi`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "Moderate",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "API.DangerousAPI.BannedFunction"
+            ]
+          }
+        },
+        {
+          "ruleId": "95000276-7163-3b59-85bb-c98580ef9ec7",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "Detected Prohibited C Function"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WriteProblem.cpp"
+                },
+                "region": {
+                  "startLine": 62,
+                  "startColumn": 7,
+                  "endLine": 62,
+                  "endColumn": 12,
+                  "charOffset": 1630,
+                  "charLength": 5,
+                  "snippet": {
+                    "text": "fopen",
+                    "rendered": {
+                      "text": "fopen",
+                      "markdown": "`fopen`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "Moderate",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "API.DangerousAPI.BannedFunction"
+            ]
+          }
+        },
+        {
+          "ruleId": "b883d927-ccaf-38d4-90f3-55b3971554a3",
           "kind": "fail",
           "level": "warning",
           "message": {
@@ -1359,6 +1081,176 @@
             "DevSkimConfidence": "High",
             "tags": [
               "API.DangerousAPI.BannedFunction"
+            ]
+          }
+        },
+        {
+          "ruleId": "db60085c-a4ba-35b9-93b7-9ee0471b0fbd",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "Detected Prohibited C Function"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WriteProblem.cpp"
+                },
+                "region": {
+                  "startLine": 61,
+                  "startColumn": 12,
+                  "endLine": 61,
+                  "endColumn": 17,
+                  "charOffset": 1597,
+                  "charLength": 5,
+                  "snippet": {
+                    "text": "fopen",
+                    "rendered": {
+                      "text": "fopen",
+                      "markdown": "`fopen`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "Moderate",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "API.DangerousAPI.BannedFunction"
+            ]
+          }
+        },
+        {
+          "ruleId": "fcf7049b-6eb8-3cd1-8d48-9ca219a91264",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "Unsecured Web Link Vulnerability"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ReportResults.cpp"
+                },
+                "region": {
+                  "startLine": 456,
+                  "startColumn": 115,
+                  "endLine": 456,
+                  "endColumn": 140,
+                  "charOffset": 26246,
+                  "charLength": 25,
+                  "snippet": {
+                    "text": "http://hpcg-benchmark.org",
+                    "rendered": {
+                      "text": "http://hpcg-benchmark.org",
+                      "markdown": "`http://hpcg-benchmark.org`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "An HTTP-based URL without TLS was detected."
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "src/ReportResults.cpp"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "charOffset": 26246,
+                        "charLength": 25
+                      },
+                      "insertedContent": {
+                        "text": "https://hpcg-benchmark.org"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "Moderate",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "ThreatModel.Integration.HTTP"
+            ]
+          }
+        },
+        {
+          "ruleId": "d216615d-7640-3135-80e9-44789746015a",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "Unsecured Web Address"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ReportResults.cpp"
+                },
+                "region": {
+                  "startLine": 450,
+                  "startColumn": 94,
+                  "endLine": 450,
+                  "endColumn": 119,
+                  "charOffset": 25772,
+                  "charLength": 25,
+                  "snippet": {
+                    "text": "http://hpcg-benchmark.org",
+                    "rendered": {
+                      "text": "http://hpcg-benchmark.org",
+                      "markdown": "`http://hpcg-benchmark.org`"
+                    }
+                  },
+                  "sourceLanguage": "cpp"
+                }
+              }
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "An HTTP-based URL without TLS was detected."
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "src/ReportResults.cpp"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "charOffset": 25772,
+                        "charLength": 25
+                      },
+                      "insertedContent": {
+                        "text": "https://hpcg-benchmark.org"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "DevSkimSeverity": "Moderate",
+            "DevSkimConfidence": "High",
+            "tags": [
+              "ThreatModel.Integration.HTTP"
             ]
           }
         },
@@ -1403,7 +1295,7 @@
           }
         },
         {
-          "ruleId": "b250aa0e-3518-36c3-b1ee-18227fbd22ad",
+          "ruleId": "1203a5c5-72da-3adf-b05b-89ac324816b0",
           "kind": "fail",
           "level": "warning",
           "message": {
@@ -1416,11 +1308,11 @@
                   "uri": "src/test_rochpcg.cpp"
                 },
                 "region": {
-                  "startLine": 140,
+                  "startLine": 139,
                   "startColumn": 2,
-                  "endLine": 140,
+                  "endLine": 139,
                   "endColumn": 9,
-                  "charOffset": 7370,
+                  "charOffset": 7335,
                   "charLength": 7,
                   "snippet": {
                     "text": "sprintf",
@@ -1443,7 +1335,7 @@
           }
         },
         {
-          "ruleId": "1203a5c5-72da-3adf-b05b-89ac324816b0",
+          "ruleId": "b250aa0e-3518-36c3-b1ee-18227fbd22ad",
           "kind": "fail",
           "level": "warning",
           "message": {
@@ -1456,11 +1348,11 @@
                   "uri": "src/test_rochpcg.cpp"
                 },
                 "region": {
-                  "startLine": 139,
+                  "startLine": 140,
                   "startColumn": 2,
-                  "endLine": 139,
+                  "endLine": 140,
                   "endColumn": 9,
-                  "charOffset": 7335,
+                  "charOffset": 7370,
                   "charLength": 7,
                   "snippet": {
                     "text": "sprintf",
@@ -1903,136 +1795,6 @@
           }
         },
         {
-          "ruleId": "fcf7049b-6eb8-3cd1-8d48-9ca219a91264",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "Unsecured Web Link Vulnerability"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ReportResults.cpp"
-                },
-                "region": {
-                  "startLine": 456,
-                  "startColumn": 115,
-                  "endLine": 456,
-                  "endColumn": 140,
-                  "charOffset": 26246,
-                  "charLength": 25,
-                  "snippet": {
-                    "text": "http://hpcg-benchmark.org",
-                    "rendered": {
-                      "text": "http://hpcg-benchmark.org",
-                      "markdown": "`http://hpcg-benchmark.org`"
-                    }
-                  },
-                  "sourceLanguage": "cpp"
-                }
-              }
-            }
-          ],
-          "fixes": [
-            {
-              "description": {
-                "text": "An HTTP-based URL without TLS was detected."
-              },
-              "artifactChanges": [
-                {
-                  "artifactLocation": {
-                    "uri": "src/ReportResults.cpp"
-                  },
-                  "replacements": [
-                    {
-                      "deletedRegion": {
-                        "charOffset": 26246,
-                        "charLength": 25
-                      },
-                      "insertedContent": {
-                        "text": "https://hpcg-benchmark.org"
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "properties": {
-            "DevSkimSeverity": "Moderate",
-            "DevSkimConfidence": "High",
-            "tags": [
-              "ThreatModel.Integration.HTTP"
-            ]
-          }
-        },
-        {
-          "ruleId": "d216615d-7640-3135-80e9-44789746015a",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "Unsecured Web Address"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ReportResults.cpp"
-                },
-                "region": {
-                  "startLine": 450,
-                  "startColumn": 94,
-                  "endLine": 450,
-                  "endColumn": 119,
-                  "charOffset": 25772,
-                  "charLength": 25,
-                  "snippet": {
-                    "text": "http://hpcg-benchmark.org",
-                    "rendered": {
-                      "text": "http://hpcg-benchmark.org",
-                      "markdown": "`http://hpcg-benchmark.org`"
-                    }
-                  },
-                  "sourceLanguage": "cpp"
-                }
-              }
-            }
-          ],
-          "fixes": [
-            {
-              "description": {
-                "text": "An HTTP-based URL without TLS was detected."
-              },
-              "artifactChanges": [
-                {
-                  "artifactLocation": {
-                    "uri": "src/ReportResults.cpp"
-                  },
-                  "replacements": [
-                    {
-                      "deletedRegion": {
-                        "charOffset": 25772,
-                        "charLength": 25
-                      },
-                      "insertedContent": {
-                        "text": "https://hpcg-benchmark.org"
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "properties": {
-            "DevSkimSeverity": "Moderate",
-            "DevSkimConfidence": "High",
-            "tags": [
-              "ThreatModel.Integration.HTTP"
-            ]
-          }
-        },
-        {
           "ruleId": "471714e0-a1e3-3b6b-8b62-9014c4e033b4",
           "kind": "fail",
           "level": "note",
@@ -2163,46 +1925,6 @@
           }
         },
         {
-          "ruleId": "f0e7961d-cc44-3545-9a43-e2d61c38ab87",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "\"Prohibited C Function Identified\""
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/YAML_Doc.cpp"
-                },
-                "region": {
-                  "startLine": 59,
-                  "startColumn": 8,
-                  "endLine": 59,
-                  "endColumn": 17,
-                  "charOffset": 1633,
-                  "charLength": 9,
-                  "snippet": {
-                    "text": "localtime",
-                    "rendered": {
-                      "text": "localtime",
-                      "markdown": "`localtime`"
-                    }
-                  },
-                  "sourceLanguage": "cpp"
-                }
-              }
-            }
-          ],
-          "properties": {
-            "DevSkimSeverity": "Moderate",
-            "DevSkimConfidence": "High",
-            "tags": [
-              "API.DangerousAPI.BannedFunction"
-            ]
-          }
-        },
-        {
           "ruleId": "c3192606-4e8b-31b1-bb21-4b9d3630dae2",
           "kind": "fail",
           "level": "note",
@@ -2268,7 +1990,7 @@
           }
         },
         {
-          "ruleId": "a898c326-1e33-3be4-bf4c-fbe145226317",
+          "ruleId": "7a52b314-ec76-3e82-8173-8a494a15c92c",
           "kind": "fail",
           "level": "warning",
           "message": {
@@ -2278,340 +2000,20 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/main.cpp"
+                  "uri": "src/ReadHpcgDat.cpp"
                 },
                 "region": {
-                  "startLine": 572,
-                  "startColumn": 17,
-                  "endLine": 572,
-                  "endColumn": 23,
-                  "charOffset": 17649,
-                  "charLength": 6,
+                  "startLine": 43,
+                  "startColumn": 22,
+                  "endLine": 43,
+                  "endColumn": 27,
+                  "charOffset": 969,
+                  "charLength": 5,
                   "snippet": {
-                    "text": "printf",
+                    "text": "fopen",
                     "rendered": {
-                      "text": "printf",
-                      "markdown": "`printf`"
-                    }
-                  },
-                  "sourceLanguage": "cpp"
-                }
-              }
-            }
-          ],
-          "properties": {
-            "DevSkimSeverity": "Moderate",
-            "DevSkimConfidence": "High",
-            "tags": [
-              "API.DangerousAPI.BannedFunction"
-            ]
-          }
-        },
-        {
-          "ruleId": "ddd853bf-c998-3448-b46e-02b8d7e94769",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "Detected Prohibited C Function"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/main.cpp"
-                },
-                "region": {
-                  "startLine": 405,
-                  "startColumn": 16,
-                  "endLine": 405,
-                  "endColumn": 22,
-                  "charOffset": 12107,
-                  "charLength": 6,
-                  "snippet": {
-                    "text": "printf",
-                    "rendered": {
-                      "text": "printf",
-                      "markdown": "`printf`"
-                    }
-                  },
-                  "sourceLanguage": "cpp"
-                }
-              }
-            }
-          ],
-          "properties": {
-            "DevSkimSeverity": "Moderate",
-            "DevSkimConfidence": "High",
-            "tags": [
-              "API.DangerousAPI.BannedFunction"
-            ]
-          }
-        },
-        {
-          "ruleId": "dba2d371-d54d-36af-a5a9-6f76f100a7e8",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "Detected Prohibited C Function"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/main.cpp"
-                },
-                "region": {
-                  "startLine": 365,
-                  "startColumn": 16,
-                  "endLine": 365,
-                  "endColumn": 22,
-                  "charOffset": 11160,
-                  "charLength": 6,
-                  "snippet": {
-                    "text": "printf",
-                    "rendered": {
-                      "text": "printf",
-                      "markdown": "`printf`"
-                    }
-                  },
-                  "sourceLanguage": "cpp"
-                }
-              }
-            }
-          ],
-          "properties": {
-            "DevSkimSeverity": "Moderate",
-            "DevSkimConfidence": "High",
-            "tags": [
-              "API.DangerousAPI.BannedFunction"
-            ]
-          }
-        },
-        {
-          "ruleId": "e03f8fa2-fa3a-3cd4-86c0-78d409d9d2ec",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "Detected Prohibited C Function"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/main.cpp"
-                },
-                "region": {
-                  "startLine": 375,
-                  "startColumn": 16,
-                  "endLine": 375,
-                  "endColumn": 22,
-                  "charOffset": 11433,
-                  "charLength": 6,
-                  "snippet": {
-                    "text": "printf",
-                    "rendered": {
-                      "text": "printf",
-                      "markdown": "`printf`"
-                    }
-                  },
-                  "sourceLanguage": "cpp"
-                }
-              }
-            }
-          ],
-          "properties": {
-            "DevSkimSeverity": "Moderate",
-            "DevSkimConfidence": "High",
-            "tags": [
-              "API.DangerousAPI.BannedFunction"
-            ]
-          }
-        },
-        {
-          "ruleId": "a54baa56-914a-39cd-9174-4d3f2fb0406e",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "Detected Prohibited C Function"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/main.cpp"
-                },
-                "region": {
-                  "startLine": 315,
-                  "startColumn": 16,
-                  "endLine": 315,
-                  "endColumn": 22,
-                  "charOffset": 9671,
-                  "charLength": 6,
-                  "snippet": {
-                    "text": "printf",
-                    "rendered": {
-                      "text": "printf",
-                      "markdown": "`printf`"
-                    }
-                  },
-                  "sourceLanguage": "cpp"
-                }
-              }
-            }
-          ],
-          "properties": {
-            "DevSkimSeverity": "Moderate",
-            "DevSkimConfidence": "High",
-            "tags": [
-              "API.DangerousAPI.BannedFunction"
-            ]
-          }
-        },
-        {
-          "ruleId": "1dc19bec-e483-3183-8cee-54fbefc30562",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "Detected Prohibited C Function"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/main.cpp"
-                },
-                "region": {
-                  "startLine": 234,
-                  "startColumn": 18,
-                  "endLine": 234,
-                  "endColumn": 24,
-                  "charOffset": 7114,
-                  "charLength": 6,
-                  "snippet": {
-                    "text": "printf",
-                    "rendered": {
-                      "text": "printf",
-                      "markdown": "`printf`"
-                    }
-                  },
-                  "sourceLanguage": "cpp"
-                }
-              }
-            }
-          ],
-          "properties": {
-            "DevSkimSeverity": "Moderate",
-            "DevSkimConfidence": "High",
-            "tags": [
-              "API.DangerousAPI.BannedFunction"
-            ]
-          }
-        },
-        {
-          "ruleId": "36d8fd5d-4eda-32f4-acba-58f1bc217d12",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "Detected Prohibited C Function"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/main.cpp"
-                },
-                "region": {
-                  "startLine": 217,
-                  "startColumn": 16,
-                  "endLine": 217,
-                  "endColumn": 22,
-                  "charOffset": 6602,
-                  "charLength": 6,
-                  "snippet": {
-                    "text": "printf",
-                    "rendered": {
-                      "text": "printf",
-                      "markdown": "`printf`"
-                    }
-                  },
-                  "sourceLanguage": "cpp"
-                }
-              }
-            }
-          ],
-          "properties": {
-            "DevSkimSeverity": "Moderate",
-            "DevSkimConfidence": "High",
-            "tags": [
-              "API.DangerousAPI.BannedFunction"
-            ]
-          }
-        },
-        {
-          "ruleId": "31c7332d-3731-3ab0-8a50-5c6b0e1af04e",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "Detected Prohibited C Function"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/main.cpp"
-                },
-                "region": {
-                  "startLine": 222,
-                  "startColumn": 18,
-                  "endLine": 222,
-                  "endColumn": 24,
-                  "charOffset": 6764,
-                  "charLength": 6,
-                  "snippet": {
-                    "text": "printf",
-                    "rendered": {
-                      "text": "printf",
-                      "markdown": "`printf`"
-                    }
-                  },
-                  "sourceLanguage": "cpp"
-                }
-              }
-            }
-          ],
-          "properties": {
-            "DevSkimSeverity": "Moderate",
-            "DevSkimConfidence": "High",
-            "tags": [
-              "API.DangerousAPI.BannedFunction"
-            ]
-          }
-        },
-        {
-          "ruleId": "274f8a8f-1db1-3048-bdb3-e627ce2e5161",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "Detected Prohibited C Function"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/rochpcg_gtest_main.cpp"
-                },
-                "region": {
-                  "startLine": 75,
-                  "startColumn": 24,
-                  "endLine": 75,
-                  "endColumn": 28,
-                  "charOffset": 2695,
-                  "charLength": 4,
-                  "snippet": {
-                    "text": "atoi",
-                    "rendered": {
-                      "text": "atoi",
-                      "markdown": "`atoi`"
+                      "text": "fopen",
+                      "markdown": "`fopen`"
                     }
                   },
                   "sourceLanguage": "cpp"
